@@ -1,5 +1,11 @@
 package latice.application;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import latice.model.Game;
+import latice.model.Player;
+import latice.model.tiles.*;
 
 public class LaticeApplicationConsole {
 	
@@ -12,32 +18,30 @@ public class LaticeApplicationConsole {
 		System.out.println("--  et par Milan				     --");
 		System.out.println("-------------------------------------------------------");
 		
-		public class LaticeApplicationConsole {
-		    public static void main(String[] args) {
+		
 		 
-		        Player player1 = new Player("Player 1", new ArrayList<>(), new ArrayList<>(), 0, 1);
-		        Player player2 = new Player("Player 2", new ArrayList<>(), new ArrayList<>(), 0, 1);
+        Player player1 = new Player("Player 1", new ArrayList<>(), new ArrayList<>(), 0, 1);
+        Player player2 = new Player("Player 2", new ArrayList<>(), new ArrayList<>(), 0, 1);
 
-		        // 2. Création de la liste de toutes les tuiles du jeu
-		        List<Tile> allTiles = new ArrayList<>();
-		        int idCounter = 1;
+        // 2. Création de la liste de toutes les tuiles du jeu
+        List<Tile> allTiles = new ArrayList<>();
+        int idCounter = 1;
 
-		        // On crée deux exemplaires de chaque combinaison couleur + symbole
-		        for (Color color : Color.values()) {
-		            for (Symbol symbol : Symbol.values()) {
-		                for (int i = 0; i < 2; i++) {
-		                    Tile tile = new Tile(idCounter++, color, symbol, false);
-		                    allTiles.add(tile);
-		                }
-		            }
-		        }
+        // On crée deux exemplaires de chaque combinaison couleur + symbole
+        for (Color color : Color.values()) {
+            for (Symbol symbol : Symbol.values()) {
+                for (int i = 0; i < 2; i++) {
+                    Tile tile = new Tile(idCounter++, color, symbol, false);
+                    allTiles.add(tile);
+                }
+            }
+        }
 
 		        // 3. Mélanger les tuiles
 		        Collections.shuffle(allTiles);
 
-		        // 4. Création de la partie et du referee
+		        // 4. Création de la partie
 		        Game game = new Game(player1, player2, new Board(), true);
-		        Referee referee = new Referee(game);
 
 		        // 5. Assigner la réserve aux joueurs
 		        player1.Deck(allTiles);
