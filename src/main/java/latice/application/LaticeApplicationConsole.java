@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import latice.model.Board;
+import latice.model.Cell;
+import latice.model.CellType;
 import latice.model.Game;
 import latice.model.Player;
 import latice.model.tiles.*;
@@ -37,32 +40,53 @@ public class LaticeApplicationConsole {
             }
         }
 
-		        // 3. Mélanger les tuiles
-		        Collections.shuffle(allTiles);
+        // 3. Mélanger les tuiles
+        Collections.shuffle(allTiles);
 
-		        // 4. Création de la partie
-		        Game game = new Game(player1, player2, new Board(), true);
+        // 4. Création de la partie
+        Game game = new Game(player1, player2, new Board(), true);
 
-		        // 5. Assigner la réserve aux joueurs
-		        player1.Deck(allTiles);
-		        player2.Deck(allTiles); // partage la même réserve
+        // 5. Assigner la réserve aux joueurs
+        player1.Deck(allTiles);
+        player2.Deck(allTiles); // partage la même réserve
 
-		        // 6. Affichage des racks avant remplissage
-		        System.out.println("Rack de " + player1.getName() + " avant : " + player1.getRack().size());
-		        System.out.println("Rack de " + player2.getName() + " avant : " + player2.getRack().size());
+        // 6. Affichage des racks avant remplissage
+        System.out.println("Rack de " + player1.getName() + " avant : " + player1.getRack().size());
+        System.out.println("Rack de " + player2.getName() + " avant : " + player2.getRack().size());
 
-		        
-		        Game.fillRack(player1);
-		        Game.fillRack(player2);
+        
+        Game.fillRack(player1);
+        Game.fillRack(player2);
 
-		        // 8. Affichage des racks après remplissage
-		        System.out.println("Rack de " + player1.getName() + " après : " + player1.getRack().size());
-		        System.out.println("Rack de " + player2.getName() + " après : " + player2.getRack().size());
+        // 8. Affichage des racks après remplissage
+        System.out.println("Rack de " + player1.getName() + " après : " + player1.getRack().size());
+        System.out.println("Rack de " + player2.getName() + " après : " + player2.getRack().size());
 
-		        // 9. Affichage final des tuiles dans les racks
-		        System.out.println(player1.getName() + " tuiles dans le rack : " + player1.getRack());
-		        System.out.println(player2.getName() + " tuiles dans le rack : " + player2.getRack());
-	}  
+        // 9. Affichage final des tuiles dans les racks
+        System.out.println(player1.getName() + " tuiles dans le rack : " + player1.getRack());
+        System.out.println(player2.getName() + " tuiles dans le rack : " + player2.getRack());
+        
+	     // 10. Affichage du plateau de jeu
+		    Board board = game.getBoard();  // Récupère le plateau utilisé dans le jeu
+		    System.out.println("Plateau de jeu :");
+
+		    for (int row = 0; row < board.getSize(); row++) {
+		        for (int col = 0; col < board.getSize(); col++) {
+		            Cell cell = board.getCell(row, col);
+		            if (cell.getType() == CellType.SUN) {
+	                    System.out.print(" ☀️ ");
+	                }  else if (cell.getType() == CellType.MOON) {
+	                    System.out.print(" 🌙 ");
+	                } else {
+	                    System.out.print(" ⚫ ");
+	                }
+		       
+		        }
+		        System.out.println();
+		}	
+
+		
+	} 
+}
 	
 
-}
