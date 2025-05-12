@@ -1,4 +1,4 @@
-package latice.model;
+package latice.model.board;
 import latice.model.tiles.Tile;
 
 public class Cell {

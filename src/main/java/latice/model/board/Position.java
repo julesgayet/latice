@@ -1,4 +1,4 @@
-package latice.model;
+package latice.model.board;
 
 public class Position {
 	private Integer posX;

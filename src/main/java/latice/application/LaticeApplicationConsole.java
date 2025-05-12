@@ -3,11 +3,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import latice.model.Board;
-import latice.model.Cell;
-import latice.model.CellType;
 import latice.model.Game;
 import latice.model.Player;
+import latice.model.board.Board;
+import latice.model.board.Cell;
+import latice.model.board.CellType;
 import latice.model.tiles.*;
 
 public class LaticeApplicationConsole {

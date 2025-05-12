@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import latice.model.Board;
+import latice.model.board.Board;
 import latice.model.tiles.Color;
 import latice.model.tiles.Symbol;
 import latice.model.tiles.Tile;

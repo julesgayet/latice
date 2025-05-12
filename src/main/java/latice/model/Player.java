@@ -3,7 +3,7 @@ package latice.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import latice.model.Position;
+import latice.model.board.Position;
 import latice.model.tiles.Tile;
 
 public class Player {

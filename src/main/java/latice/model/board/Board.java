@@ -1,4 +1,4 @@
-package latice.model;
+package latice.model.board;
 
 import java.util.ArrayList;
 import java.util.List;
