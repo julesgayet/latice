@@ -84,12 +84,8 @@ public class Game {
 	}
 	
 	
-	public void switchTurn(Player player1, Player player2, Player currentPlayer) {
-	    if (currentPlayer == player1) {
-	        currentPlayer = player2;
-	    } else {
-	        currentPlayer = player1;
-	    }
+	public void switchTurn() {
+	    this.currentPlayer = (this.currentPlayer == player1) ? player2 : player1;
 	}
 	
 	public void distributeTiles(List<Tile> allTiles, Player player1, Player player2) {
