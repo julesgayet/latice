@@ -33,4 +33,19 @@ public class TileTest {
 	    assertEquals(Symbol.DOLPHIN, tile.getSymbol());
 	    assertFalse(tile.getInGame());
 	}
+	
+	@Test
+	public void testSetters() {
+	    Tile tile = new Tile(0, Color.GREEN, Symbol.FEATHER, true);
+	    tile.Id(99);
+	    tile.Color(Color.YELLOW);
+	    tile.Symbol(Symbol.SEAGULL);
+	    tile.InGame(false);
+
+	    assertEquals(Integer.valueOf(99), tile.getId());
+	    assertEquals(Color.YELLOW, tile.getColor());
+	    assertEquals(Symbol.SEAGULL, tile.getSymbol());
+	    assertFalse(tile.getInGame());
+	}
+
 }
