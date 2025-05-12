@@ -83,4 +83,19 @@ public class GameTest {
         game.switchTurn();
         assertEquals(player1, game.getCurrentPlayer());
     }
+    
+    @Test
+    public void testShakeTilesRandomizesOrder() {
+        List<Tile> original = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            original.add(new Tile(i, Color.BLUE, Symbol.SQUARE, false));
+        }
+
+        List<Tile> shuffled = Game.shake(original);
+        // Not guaranteed but highly likely
+        assertNotEquals(original.toString(), shuffled.toString());
+    }
+
+    
+    
 }
