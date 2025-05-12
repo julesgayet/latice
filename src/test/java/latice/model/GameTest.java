@@ -62,7 +62,7 @@ public class GameTest {
         // Add 3 tiles to player1 deck
         List<Tile> deck = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            deck.add(new Tile(i, Color.RED, Symbol.CIRCLE, false));
+            deck.add(new Tile(i, Color.RED, Symbol.FEATHER, false));
         }
         player1.Deck(deck);
 
@@ -88,7 +88,7 @@ public class GameTest {
     public void testShakeTilesRandomizesOrder() {
         List<Tile> original = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            original.add(new Tile(i, Color.BLUE, Symbol.SQUARE, false));
+            original.add(new Tile(i, Color.GREEN, Symbol.DOLPHIN, false));
         }
 
         List<Tile> shuffled = Game.shake(original);
