@@ -56,4 +56,31 @@ public class GameTest {
         assertEquals(allTiles.size() / 2, player1.getDeck().size());
         assertEquals(allTiles.size() / 2, player2.getDeck().size());
     }
+    
+    @Test
+    public void testFillRack() {
+        // Add 3 tiles to player1 deck
+        List<Tile> deck = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            deck.add(new Tile(i, Color.RED, Symbol.CIRCLE, false));
+        }
+        player1.Deck(deck);
+
+        Game.fillRack(player1);
+
+        assertEquals(3, player1.getRack().size());
+        assertTrue(player1.getDeck().isEmpty());
+    }
+
+    @Test
+    public void testSwitchTurnChangesCurrentPlayer() {
+        // Joueur courant au début : player1
+        assertEquals(player1, game.getCurrentPlayer());
+
+        game.switchTurn();
+        assertEquals(player2, game.getCurrentPlayer());
+
+        game.switchTurn();
+        assertEquals(player1, game.getCurrentPlayer());
+    }
 }
