@@ -96,6 +96,9 @@ public class GameTest {
         assertNotEquals(original.toString(), shuffled.toString());
     }
 
-    
+    @Test
+    public void testGetWinnerReturnsCurrentPlayer() {
+        assertEquals(game.getCurrentPlayer(), game.getWinner());
+    }
     
 }
