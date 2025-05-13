@@ -142,7 +142,7 @@
                   </Text>
                   <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
+                        <Image url="/img/sun.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
