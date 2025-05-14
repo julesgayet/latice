@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -11,278 +42,531 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <AnchorPane fx:id="boardColor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="900.0" style="-fx-background-color: #0000CD; -fx-border-width: 15; -fx-border-color: #00008B;">
+      <GridPane maxHeight="925.0" maxWidth="925.0" minHeight="925.0" minWidth="925.0" prefHeight="925.0" prefWidth="925.0" style="-fx-border-color: #00008B; -fx-border-width: 25;" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <GridPane fx:id="boardGrid" gridLinesVisible="true" layoutX="14.0" layoutY="14.0" maxHeight="874.0" maxWidth="871.0" minHeight="0.0" minWidth="0.0" prefHeight="871.0" prefWidth="871.0" style="-fx-border-color: #030163;">
-               <columnConstraints>
-                  <ColumnConstraints />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="288.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="288.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="288.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="288.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="288.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="288.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="288.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="288.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="312.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints maxHeight="2.0" minHeight="0.0" prefHeight="0.0" />
-                  <RowConstraints maxHeight="89.0" minHeight="10.0" prefHeight="89.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Text fill="#fcf7f7" strokeType="OUTSIDE" strokeWidth="0.0" text="L" wrappingWidth="22.13671875" GridPane.columnIndex="2" GridPane.rowIndex="7">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="72.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Text fill="#fcf7f7" strokeType="OUTSIDE" strokeWidth="0.0" text="A" wrappingWidth="22.13671875" GridPane.columnIndex="3" GridPane.rowIndex="7">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="73.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Text fill="#fcf7f7" strokeType="OUTSIDE" strokeWidth="0.0" text="T" wrappingWidth="22.13671875" GridPane.columnIndex="4" GridPane.rowIndex="7">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="75.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Text fill="#fcf7f7" strokeType="OUTSIDE" strokeWidth="0.0" text="I" wrappingWidth="22.13671875" GridPane.columnIndex="5" GridPane.rowIndex="7">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="80.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Text fill="#fcf7f7" strokeType="OUTSIDE" strokeWidth="0.0" text="C" wrappingWidth="22.13671875" GridPane.columnIndex="6" GridPane.rowIndex="7">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="82.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Text fill="#fcf7f7" strokeType="OUTSIDE" strokeWidth="0.0" text="E" wrappingWidth="22.13671875" GridPane.columnIndex="7" GridPane.rowIndex="7">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="90.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Text fill="#fcf7f7" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E" wrappingWidth="22.13671875" GridPane.columnIndex="2" GridPane.rowIndex="9">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="72.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Text fill="#fcf7f7" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C" wrappingWidth="22.13671875" GridPane.columnIndex="3" GridPane.rowIndex="9">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="73.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Text fill="#fcf7f7" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="I" wrappingWidth="22.13671875" GridPane.columnIndex="4" GridPane.rowIndex="9">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="75.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Text fill="#fcf7f7" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="T" wrappingWidth="22.13671875" GridPane.columnIndex="5" GridPane.rowIndex="9">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="80.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Text fill="#fcf7f7" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A" wrappingWidth="22.13671875" GridPane.columnIndex="6" GridPane.rowIndex="9">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="82.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Text fill="#fcf7f7" rotate="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L" wrappingWidth="22.13671875" GridPane.columnIndex="7" GridPane.rowIndex="9">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="90.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <image>
-                        <Image url="/img/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="1" GridPane.rowIndex="12">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="2" GridPane.rowIndex="11">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="3" GridPane.rowIndex="10">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="9" GridPane.rowIndex="12">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="8" GridPane.rowIndex="11">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="7" GridPane.rowIndex="10">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="9" GridPane.rowIndex="4">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="8" GridPane.rowIndex="5">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="9" GridPane.rowIndex="8">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="sun" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="5" GridPane.rowIndex="12">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/sun.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="moon" fitHeight="92.0" fitWidth="95.0" GridPane.columnIndex="5" GridPane.rowIndex="8">
-                     <image>
-                        <Image url="@/Users/macbookm/eclipse-workspace/saebut1/latice/src/main/resources/images/moon.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
+            <ImageView fx:id="square_00" fitHeight="100.0" fitWidth="100.0">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_11" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_22" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_40" fitHeight="100.0" fitWidth="100.0" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_62" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_80" fitHeight="100.0" fitWidth="100.0" GridPane.rowIndex="8">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_71" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_08" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="8">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_17" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_26" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_48" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="8" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_66" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_77" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_88" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="8" GridPane.rowIndex="8">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_44" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@img/moon.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_04" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="4">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_84" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="8">
+               <image>
+                  <Image url="@img/sun.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_31" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@img/sea_L.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_32" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@img/sea_A.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_33" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@img/sea_T.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_34" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@img/sea_I.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_35" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@img/sea_C.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_36" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@img/sea_E.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_57" fitHeight="100.0" fitWidth="100.0" rotate="180.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@img/sea_L.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_56" fitHeight="100.0" fitWidth="100.0" rotate="180.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@img/sea_A.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_55" fitHeight="100.0" fitWidth="100.0" rotate="180.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@img/sea_T.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_54" fitHeight="100.0" fitWidth="100.0" rotate="180.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@img/sea_I.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_53" fitHeight="100.0" fitWidth="100.0" rotate="180.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@img/sea_C.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_52" fitHeight="100.0" fitWidth="100.0" rotate="180.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@img/sea_E.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_01" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_02" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="2">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_10" fitHeight="100.0" fitWidth="100.0" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_03" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="3">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_05" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="5">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_12" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_13" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_15" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_07" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="7">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_16" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_06" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="6">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_14" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_20" fitHeight="100.0" fitWidth="100.0" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_85" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="8">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_83" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_82" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_81" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_78" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="8" GridPane.rowIndex="7">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_76" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_75" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_74" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_73" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_72" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_70" fitHeight="100.0" fitWidth="100.0" GridPane.rowIndex="7">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_68" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="8" GridPane.rowIndex="6">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_67" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_65" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_64" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_63" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_61" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_60" fitHeight="100.0" fitWidth="100.0" GridPane.rowIndex="6">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_58" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="8" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_51" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_50" fitHeight="100.0" fitWidth="100.0" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_47" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_46" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_45" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_43" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_42" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_41" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_38" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="8" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_37" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_30" fitHeight="100.0" fitWidth="100.0" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_28" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="8" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_27" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_18" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="8" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_25" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_24" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_23" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_21" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_86" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="8">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="square_87" fitHeight="100.0" fitWidth="100.0" GridPane.columnIndex="7" GridPane.rowIndex="8">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
          </children>
-      </AnchorPane>
+      </GridPane>
    </center>
    <bottom>
-      <GridPane prefHeight="95.0" prefWidth="92.0" style="-fx-background-color: #F1F1F1;" BorderPane.alignment="CENTER">
+      <GridPane maxHeight="100.0" maxWidth="1700.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="170.0" style="-fx-border-color: #00008B; -fx-border-width: 25;">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text fill="#a89696" strokeType="OUTSIDE" strokeWidth="0.0" text="R" wrappingWidth="22.13671875" GridPane.columnIndex="1">
-               <font>
-                  <Font size="50.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Text>
-            <Text fill="#a89696" strokeType="OUTSIDE" strokeWidth="0.0" text="A" wrappingWidth="22.13671875" GridPane.columnIndex="2">
-               <font>
-                  <Font size="50.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Text>
-            <Text fill="#a89696" strokeType="OUTSIDE" strokeWidth="0.0" text="C" wrappingWidth="22.13671875" GridPane.columnIndex="3">
-               <font>
-                  <Font size="50.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Text>
-            <Text fill="#a89696" strokeType="OUTSIDE" strokeWidth="0.0" text="K" wrappingWidth="22.13671875" GridPane.columnIndex="4">
-               <font>
-                  <Font size="50.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="40.0" />
-               </GridPane.margin>
-            </Text>
-            <ImageView fx:id="deck" fitHeight="95.0" fitWidth="126.0" GridPane.columnIndex="6">
+            <ImageView fx:id="deck" fitHeight="100.0" fitWidth="175.0" GridPane.columnIndex="6">
                <image>
-                  <Image url="@../../../../../../img/rack.png" />
+                  <Image url="@img/rack.PNG" />
                </image>
             </ImageView>
+            <ImageView fx:id="rack_6" fitHeight="100.0" fitWidth="172.0" GridPane.columnIndex="5">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="rack_2" fitHeight="100.0" fitWidth="172.0" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="rack_3" fitHeight="100.0" fitWidth="172.0" GridPane.columnIndex="2">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="rack_4" fitHeight="100.0" fitWidth="172.0" GridPane.columnIndex="3">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="rack_5" fitHeight="100.0" fitWidth="172.0" GridPane.columnIndex="4">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="rack_1" fitHeight="100.0" fitWidth="172.0">
+               <image>
+                  <Image url="@img/sea.PNG" />
+               </image>
+            </ImageView>
+            <Text fill="#000d72" strokeType="OUTSIDE" strokeWidth="0.0" text="R" GridPane.columnIndex="1">
+               <font>
+                  <Font size="70.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="85.0" />
+               </GridPane.margin>
+            </Text>
+            <Text fill="#000d72" strokeType="OUTSIDE" strokeWidth="0.0" text="A" GridPane.columnIndex="2">
+               <font>
+                  <Font size="70.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="135.0" />
+               </GridPane.margin>
+            </Text>
+            <Text fill="#000d72" strokeType="OUTSIDE" strokeWidth="0.0" text="K" GridPane.columnIndex="4">
+               <font>
+                  <Font size="70.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="200.0" />
+               </GridPane.margin>
+            </Text>
+            <Text fill="#000d72" strokeType="OUTSIDE" strokeWidth="0.0" text="C" GridPane.columnIndex="3">
+               <font>
+                  <Font size="70.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="150.0" />
+               </GridPane.margin>
+            </Text>
          </children>
+         <BorderPane.margin>
+            <Insets top="-100.0" />
+         </BorderPane.margin>
       </GridPane>
    </bottom>
 </BorderPane>
