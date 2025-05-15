@@ -53,10 +53,7 @@ public class Game {
 	            }
 	        }
 	    }
-<<<<<<< HEAD
-=======
 	    return allTiles;
->>>>>>> origin/V4
 	}
 	
 	public Player firstPlayer(Player p1, Player p2) {
