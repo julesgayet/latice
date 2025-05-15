@@ -4,11 +4,13 @@ package latice.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import latice.model.board.Board;
 import latice.model.tiles.Color;
 import latice.model.tiles.Symbol;
 import latice.model.tiles.Tile;
+
 
 public class Game {
 	
@@ -42,10 +44,20 @@ public class Game {
 	                allTiles.add(tile);
 	            }
 	        }
-	    }	
+	    }
 	}
 	
-	
+	public Player firstPlayer(Player p1, Player p2) {
+		
+	        Random rand = new Random();
+	        int nombre = rand.nextInt(1);
+	        
+	        if (nombre == 1) {
+	        	return p1;
+	    } else {
+	    	return p2;
+	    }
+	}
 
 	 public Player getWinner() {
 		return currentPlayer;
