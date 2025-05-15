@@ -1,0 +1,54 @@
+package latice.model;
+
+import latice.model.tiles.Tile;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class TestReferee {
+
+    private Player player1;
+    private Player player2;
+    private Referee referee;
+
+    @BeforeEach
+    void setUp() {
+        // On utilise la méthode Game.generateAllTiles()
+        List<Tile> allTiles = Game.generateAllTiles(); 
+        
+        // Mélanger pour rendre la distribution aléatoire
+        Collections.shuffle(allTiles);
+
+        // Diviser en deux paquets égaux pour les deux joueurs
+        List<Tile> deck1 = new ArrayList<>(allTiles.subList(0, allTiles.size() / 2));
+        List<Tile> deck2 = new ArrayList<>(allTiles.subList(allTiles.size() / 2, allTiles.size()));
+
+        player1 = new Player("Jules", deck1, new ArrayList<>(), 0, 1);
+        player2 = new Player("Ahmed", deck2, new ArrayList<>(), 0, 1);
+        referee = new Referee(player1, player2);
+    }
+
+    @Test
+    void testDistributeInitialTiles() {
+        // Vérifie que les racks sont vides avant
+        assertEquals(0, player1.getRack().size());
+        assertEquals(0, player2.getRack().size());
+
+        // Lance la distribution
+        referee.distributeInitialTiles();
+
+        // Chaque joueur doit avoir 5 tuiles (taille max du rack)
+        assertEquals(5, player1.getRack().size());
+        assertEquals(5, player2.getRack().size());
+
+        // Vérifie que le deck a été réduit en conséquence
+        assertEquals(31, player1.getDeck().size()); // 12 - 5
+        assertEquals(31, player2.getDeck().size());
+    }
+}
