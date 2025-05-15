@@ -60,6 +60,7 @@ public class GameTest {
     @Test
     public void testFillRack() {
         // Add 3 tiles to player1 deck
+
         List<Tile> rack = new ArrayList<>();
         while (rack.size() < 5) {
         	int i = 0;

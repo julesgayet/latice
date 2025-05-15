@@ -16,7 +16,7 @@ public class Referee {
         this.player2 = player2;
     }
 
-    private void distributeToPlayer(Player player) {
+    public void distributeToPlayer(Player player) {
         while (player.getRack().size() < RACK_SIZE && !player.getDeck().isEmpty()) {
             Tile tile = player.getDeck().remove(0);
             player.getRack().add(tile);
@@ -29,7 +29,7 @@ public class Referee {
     }
      
     
-    private List<Tile> generatePlayerDeck() {
+    public List<Tile> generatePlayerDeck() {
         List<Tile> deck = new ArrayList<>();
         Collections.shuffle(deck);
         return deck;
