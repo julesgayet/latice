@@ -9,11 +9,11 @@ public class Tile {
 	private Boolean inGame;
 	
 	//Constructeur
-	public Tile(Integer id, Color color, Symbol symbol, Boolean inGame) {
+	public Tile(Integer id, Color color, Symbol symbol) {
 		this.id = id;
 		this.color = color;
 		this.symbol = symbol;
-		this.inGame = inGame;
+		this.inGame = false;
 	}
 
 	//getteurs et setteurs

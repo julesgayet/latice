@@ -35,7 +35,7 @@ public class LaticeApplicationConsole {
         for (Color color : Color.values()) {
             for (Symbol symbol : Symbol.values()) {
                 for (int i = 0; i < 2; i++) {
-                    Tile tile = new Tile(idCounter++, color, symbol, false);
+                    Tile tile = new Tile(idCounter++, color, symbol);
                     allTiles.add(tile);
                 }
             }
