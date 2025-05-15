@@ -29,7 +29,7 @@ public class GameTest {
 
     @Test
     public void testStartCreatesCorrectNumberOfTiles() {
-        game.start();
+        Game.generateAllTiles();
         List<Tile> allTiles = new ArrayList<>();
         for (Color color : Color.values()) {
             for (Symbol symbol : Symbol.values()) {

@@ -24,7 +24,7 @@ public class Game {
 	        this.player1 = p1;
 	        this.player2 = p2;
 	        this.board = board;
-	        this.currentPlayer = p1;
+	        this.currentPlayer = firstPlayer(p1,p2);
 	        this.isOnGoing = isOnGoing;
 	    }
 	
@@ -42,19 +42,7 @@ public class Game {
 	    return allTiles;
 	}
 	
-	public List<Tile> start() {
-	    List<Tile> allTiles = new ArrayList<>();
-	    int idCounter = 1;
-	    for (Color color : Color.values()) {
-	        for (Symbol symbol : Symbol.values()) {
-	            for (int i = 0; i < 2; i++) {
-	                Tile tile = new Tile(idCounter++, color, symbol);
-	                allTiles.add(tile);
-	            }
-	        }
-	    }
-	    return allTiles;
-	}
+	
 	
 	public Player firstPlayer(Player p1, Player p2) {
 		

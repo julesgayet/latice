@@ -56,30 +56,39 @@ public class Player {
 	public String getName() {
 		return name;
 	}
+	
 	public void Name(String name) {
 		this.name = name;
 	}
+	
 	public List<Tile> getDeck() {
 		return deck;
 	}
+	
 	public void Deck(List<Tile> deck) {
 		this.deck = deck;
 	}
+	
 	public List<Tile> getRack() {
 		return rack;
 	}
+	
 	public void Rack(List<Tile> rack) {
 		this.rack = rack;
 	}
+	
 	public int getScore() {
 		return score;
 	}
+	
 	public void Score(int score) {
 		this.score = score;
 	}
+	
 	public int getAvailableActions() {
 		return availableActions;
 	}
+	
 	public void AvailableActions(int availableActions) {
 		this.availableActions = availableActions;
 	}
