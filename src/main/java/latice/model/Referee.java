@@ -27,7 +27,7 @@ public class Referee {
         player1.fillRack();
         player2.fillRack();
     }
-    
+     
     
     private List<Tile> generatePlayerDeck() {
         List<Tile> deck = new ArrayList<>();
