@@ -1,5 +1,6 @@
 package latice.application;
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -45,7 +46,15 @@ public class LaticeApplicationConsole {
 
         // 4. Création de la partie
         Game game = new Game(player1, player2, new Board(), true);
+        
+        //	Choix du premier joueur
+        Player choixPlayer1 = new Player("Player 1", new ArrayList<>(), new ArrayList<>(), 0, 1);
+        Player choixPlayer2 = new Player("Player 2", new ArrayList<>(), new ArrayList<>(), 0, 1);
+        
+        Player firstPlayer = game.firstPlayer(choixPlayer1, choixPlayer2);
 
+        System.out.println(firstPlayer.getName());
+        
         // 5. Assigner la réserve aux joueurs
         player1.Deck(allTiles);
         player2.Deck(allTiles); // partage la même réserve

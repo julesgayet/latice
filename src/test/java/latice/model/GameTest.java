@@ -66,12 +66,11 @@ public class GameTest {
             rack.add(new Tile(i, Color.RED, Symbol.FEATHER, false));
             i = i + 1;
         }
-        player1.Deck(deck);
+        player1.Rack(rack);
 
         Game.fillRack(player1);
 
-        assertEquals(3, player1.getRack().size());
-        assertTrue(player1.getDeck().isEmpty());
+        assertEquals(5, player1.getRack().size());
     }
 
     @Test

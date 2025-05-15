@@ -50,7 +50,7 @@ public class Game {
 	public Player firstPlayer(Player p1, Player p2) {
 		
 	        Random rand = new Random();
-	        int nombre = rand.nextInt(1);
+	        int nombre = rand.nextInt(2);
 	        
 	        if (nombre == 1) {
 	        	return p1;
