@@ -30,14 +30,9 @@ public class Player {
     	
     }
 
-    public void fillRack(Player player) {
-        List<Tile> rack = player.getRack();
-        List<Tile> reserve = player.getDeck();
-
-        while (rack.size() < 5 && !reserve.isEmpty()) {
-            // Retirer la première tuile de la réserve
-            Tile tile = reserve.remove(0);
-            // Ajouter cette tuile au rack
+    public void fillRack() {
+        while (rack.size() < 5 && !deck.isEmpty()) {
+            Tile tile = deck.remove(0);
             rack.add(tile);
         }
     }

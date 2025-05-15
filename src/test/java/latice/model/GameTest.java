@@ -33,8 +33,8 @@ public class GameTest {
         List<Tile> allTiles = new ArrayList<>();
         for (Color color : Color.values()) {
             for (Symbol symbol : Symbol.values()) {
-                allTiles.add(new Tile(0, color, symbol, false));
-                allTiles.add(new Tile(0, color, symbol, false));
+                allTiles.add(new Tile(0, color, symbol));
+                allTiles.add(new Tile(0, color, symbol));
             }
         }
         assertEquals(Color.values().length * Symbol.values().length * 2, allTiles.size());
@@ -46,8 +46,8 @@ public class GameTest {
         List<Tile> allTiles = new ArrayList<>();
         for (Color color : Color.values()) {
             for (Symbol symbol : Symbol.values()) {
-                allTiles.add(new Tile(0, color, symbol, false));
-                allTiles.add(new Tile(0, color, symbol, false));
+                allTiles.add(new Tile(0, color, symbol));
+                allTiles.add(new Tile(0, color, symbol));
             }
         }
 
@@ -62,7 +62,7 @@ public class GameTest {
         // Add 3 tiles to player1 deck
         List<Tile> deck = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            deck.add(new Tile(i, Color.RED, Symbol.FEATHER, false));
+            deck.add(new Tile(i, Color.RED, Symbol.FEATHER));
         }
         player1.Deck(deck);
 
@@ -88,7 +88,7 @@ public class GameTest {
     public void testShakeTilesRandomizesOrder() {
         List<Tile> original = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            original.add(new Tile(i, Color.GREEN, Symbol.DOLPHIN, false));
+            original.add(new Tile(i, Color.GREEN, Symbol.DOLPHIN));
         }
 
         List<Tile> shuffled = Game.shake(original);

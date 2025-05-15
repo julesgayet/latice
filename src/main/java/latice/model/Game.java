@@ -26,23 +26,32 @@ public class Game {
 	        this.isOnGoing = isOnGoing;
 	    }
 	
-	public void start() {
-		
-		List<Tile> allTiles = new ArrayList<>();
-		
-		int idCounter = 1;
-		
-		//On parcourt tout les types de couleurs
-		for (Color color : Color.values()) {
-			//Dans chaque couleur on va parcourir tout les types de symboles
+	
+	public static List<Tile> generateAllTiles() {
+	    List<Tile> allTiles = new ArrayList<>();
+	    int idCounter = 1;
+	    for (Color color : Color.values()) {
 	        for (Symbol symbol : Symbol.values()) {
-	        	//Puis via une boucle on a 2 exemplaires de chaque combinaison de couleur et symbole
-	            for (int i = 0; i < 2; i++) { 
-	                Tile tile = new Tile(idCounter++, color, symbol, false);
+	            for (int i = 0; i < 2; i++) {
+	                allTiles.add(new Tile(idCounter++, color, symbol));
+	            }
+	        }
+	    }
+	    return allTiles;
+	}
+	
+	public List<Tile> start() {
+	    List<Tile> allTiles = new ArrayList<>();
+	    int idCounter = 1;
+	    for (Color color : Color.values()) {
+	        for (Symbol symbol : Symbol.values()) {
+	            for (int i = 0; i < 2; i++) {
+	                Tile tile = new Tile(idCounter++, color, symbol);
 	                allTiles.add(tile);
 	            }
 	        }
-	    }	
+	    }
+	    return allTiles;
 	}
 	
 	
