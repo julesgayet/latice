@@ -16,22 +16,23 @@ public class Referee {
         this.player2 = player2;
     }
 
-    public void distributeToPlayer(Player player) {
+    public void initializeGame() {
+        List<Tile> allTiles = Game.generateAllTiles();
+        Collections.shuffle(allTiles);
+
+        int mid = allTiles.size() / 2;
+        player1.Deck(new ArrayList<>(allTiles.subList(0, mid)));
+        player2.Deck(new ArrayList<>(allTiles.subList(mid, allTiles.size())));
+
+        fillRack(player1);
+        fillRack(player2);
+    }
+
+    private void fillRack(Player player) {
         while (player.getRack().size() < RACK_SIZE && !player.getDeck().isEmpty()) {
             Tile tile = player.getDeck().remove(0);
             player.getRack().add(tile);
         }
     }
-    
-    public void distributeInitialTiles() {
-        player1.fillRack();
-        player2.fillRack();
-    }
-     
-    
-    public List<Tile> generatePlayerDeck() {
-        List<Tile> deck = new ArrayList<>();
-        Collections.shuffle(deck);
-        return deck;
-    }
+
 }

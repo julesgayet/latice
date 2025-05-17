@@ -39,7 +39,6 @@ public class RackController {
                 if (url == null) {
                     System.err.println("Image non trouvée pour le chemin : " + path);
                 } else {
-                    System.out.println("Image trouvée : " + url);
                     rackSlots[i].setImage(new Image(url.toExternalForm()));
                 }
 
@@ -48,6 +47,8 @@ public class RackController {
                 
             }
         }
+        
+        
         // Mettre à jour les labels
         if ("Player 1".equals(player.getName())) {
         	lbl_player.setText("1");

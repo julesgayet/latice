@@ -1,10 +1,7 @@
 package latice.view;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
+import java.util.ArrayList;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,47 +9,49 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Stage; 
 import javafx.util.Duration;
 import latice.model.Game;
 import latice.model.Player;
+import latice.model.Referee;
 import latice.model.board.Board;
-import latice.model.tiles.Tile;
 
 public class Main extends Application {
     
 	@Override
 	public void start(Stage primaryStage) {
-		// Create the players first
 	    Player p1 = new Player("Player 1", new ArrayList<>(), new ArrayList<>(), 0, 1);
 	    Player p2 = new Player("Player 2", new ArrayList<>(), new ArrayList<>(), 0, 1);
-
-	    // Create the game with those players
+	    
 	    Game game = new Game(p1, p2, new Board(), true);
+	    Referee referee = new Referee(p1, p2);
+	    referee.initializeGame();
 
-	    // Choose the starting player from p1 and p2
 	    Player startingPlayer = game.firstPlayer(p1, p2);
 	    
-	    // initialize tiles and racks
-	    List<Tile> allTiles = Game.generateAllTiles();
-        Collections.shuffle(allTiles);
-        
-        int mid = allTiles.size() / 2;
-        p1.Deck(new ArrayList<>(allTiles.subList(0, mid)));
-        p2.Deck(new ArrayList<>(allTiles.subList(mid, allTiles.size())));
-
-        
-        Game.fillRack(p1);
-        Game.fillRack(p2);
+	    
 
 	    Stage splashStage = new Stage();
-	    Label splashLabel = new Label(startingPlayer.getName() + " starts!");
-	    StackPane splashLayout = new StackPane(splashLabel);
-	    Scene splashScene = new Scene(splashLayout, 300, 150);
-	    splashStage.setScene(splashScene);
-	    splashStage.setTitle("Game Start");
-	    splashStage.setResizable(false);
-	    splashStage.show();
+
+		 // Charger la police personnalisée
+		 Font anton = Font.loadFont(
+		     getClass().getResourceAsStream("/font/Anton-Regular.ttf"), 36);
+		
+		 Label splashLabel = new Label(startingPlayer.getName() + " starts!");
+		 splashLabel.setFont(anton);
+		 splashLabel.setTextFill(Color.web("#FFD700")); 
+		
+		 StackPane splashLayout = new StackPane(splashLabel);
+		 splashLayout.setStyle("-fx-background-color: #2B50AA;"); 
+		
+		 Scene splashScene = new Scene(splashLayout, 400, 200);
+		 splashStage.setScene(splashScene);
+		 splashStage.setTitle("Game Start");
+		 splashStage.setResizable(false);
+		 splashStage.show();
+
 
 	    // Wait 1 second
 	    PauseTransition delay = new PauseTransition(Duration.seconds(1));
@@ -83,6 +82,7 @@ public class Main extends Application {
 	        primaryStage.setResizable(false);
 	        primaryStage.sizeToScene();
 	        primaryStage.show();
+	        
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }

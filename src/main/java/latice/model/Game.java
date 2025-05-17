@@ -97,45 +97,5 @@ public class Game {
 	    this.currentPlayer = (this.currentPlayer == player1) ? player2 : player1;
 	}
 	
-	public void distributeTiles(List<Tile> allTiles, Player player1, Player player2) {
-		
-		// On crée les deux sous listes
-		List<Tile> pile1 = new ArrayList<>();
-		List<Tile> pile2 = new ArrayList<>();
-		
-		// On mélange les tuiles de façon aléatoire
-        allTiles = shake(allTiles);
 
-        // On calcule le point de séparation
-        int mid = allTiles.size() / 2;
-
-
-        pile1 = allTiles.subList(0, mid);
-        pile2 = allTiles.subList(mid, allTiles.size());
-
-        
-        // On donne les piles aux joueurs
-        player1.Deck(pile1);
-        player2.Deck(pile2);
-	}
-	
-	
-	//Methode pour mélanger la pile de tuile 
-    public static List<Tile> shake(List<Tile> allTiles) {
-        List<Tile> res = new ArrayList<>(allTiles);
-        Collections.shuffle(res);
-        return res;
-    }
-	
-	 //  Méthode de remplissage sûre (version statique ici pour les essais)
-    public static void fillRack(Player player) {
-        List<Tile> rack = player.getRack();
-        List<Tile> reserve = player.getDeck();
-
-        while (rack.size() < 5 && !reserve.isEmpty()) {
-            rack.add(reserve.remove(0));
-        }
-    }
-
-	
 }
