@@ -26,6 +26,16 @@ public class Player {
     	this("player",deck,rack,score,availableActions);
     }
 
+    
+    public Player(String name) {
+        this.name = name;
+        this.deck = new ArrayList<>();
+        this.rack = new ArrayList<>();
+        this.score = 0;
+        this.availableActions = 1;
+    }
+    
+    
     public void playTile(Tile tile, Position position) {
     	
     }
