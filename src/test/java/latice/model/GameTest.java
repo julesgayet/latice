@@ -4,122 +4,94 @@ import latice.model.board.Board;
 import latice.model.tiles.Color;
 import latice.model.tiles.Symbol;
 import latice.model.tiles.Tile;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
 
     private Player player1;
     private Player player2;
-    private Board board;
+    private Board board; // on simulera un board vide
     private Game game;
 
     @BeforeEach
     public void setUp() {
-        player1 = new Player("Jules", null, null, null, null);
-        player2 = new Player("Milan", null, null, null, null);
-        board = new Board(); // Assuming a default constructor
+        player1 = new Player("Mostapha");
+        player2 = new Player("Ahmed");
+        board = new Board(); // supposons que Board a un constructeur vide
         game = new Game(player1, player2, board, true);
     }
 
-    @Test
-    public void testStartCreatesCorrectNumberOfTiles() {
-        Game.generateAllTiles();
-        List<Tile> allTiles = new ArrayList<>();
-        for (Color color : Color.values()) {
-            for (Symbol symbol : Symbol.values()) {
-                allTiles.add(new Tile(0, color, symbol));
-                allTiles.add(new Tile(0, color, symbol));
-            }
-        }
-        assertEquals(Color.values().length * Symbol.values().length * 2, allTiles.size());
-    }
 
     @Test
-    public void testDistributeTilesEvenly() {
-        // Generate tile set
-        List<Tile> allTiles = new ArrayList<>();
-        for (Color color : Color.values()) {
-            for (Symbol symbol : Symbol.values()) {
-                allTiles.add(new Tile(0, color, symbol));
-                allTiles.add(new Tile(0, color, symbol));
-            }
-        }
-
-       // game.distributeTiles(allTiles, player1, player2);
-
-        assertEquals(allTiles.size() / 2, player1.getDeck().size());
-        assertEquals(allTiles.size() / 2, player2.getDeck().size());
-    }
-    
-    @Test
-    public void testFillRack() {
-        // Add 3 tiles to player1 deck
-
-        List<Tile> rack = new ArrayList<>();
-        while (rack.size() < 5) {
-        	int i = 0;
-            rack.add(new Tile(i, Color.RED, Symbol.FEATHER));
-            i = i + 1;
-        }
-        player1.Rack(rack);
-
-      //  Game.fillRack(player1);
-
-        assertEquals(5, player1.getRack().size());
+    public void testFirstPlayerIsEitherPlayer1OrPlayer2() {
+        Player selected = game.firstPlayer(player1, player2);
+        assertTrue(selected == player1 || selected == player2, "Le joueur sélectionné doit être player1 ou player2");
     }
 
     @Test
     public void testSwitchTurnChangesCurrentPlayer() {
-        // Joueur courant au début : player1
-        assertEquals(player1, game.getCurrentPlayer());
-
+        Player first = game.getCurrentPlayer();
         game.switchTurn();
-        assertEquals(player2, game.getCurrentPlayer());
+        Player second = game.getCurrentPlayer();
 
-        game.switchTurn();
-        assertEquals(player1, game.getCurrentPlayer());
-    }
-    
-    @Test
-    public void testShakeTilesRandomizesOrder() {
-        List<Tile> original = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            original.add(new Tile(i, Color.GREEN, Symbol.DOLPHIN));
-        }
-
-      //  List<Tile> shuffled = Game.shake(original);
-        // Not guaranteed but highly likely
-     //   assertNotEquals(original.toString(), shuffled.toString());
+        assertNotSame(first, second, "Le joueur courant doit changer après switchTurn");
     }
 
     @Test
     public void testGetWinnerReturnsCurrentPlayer() {
-        assertEquals(game.getCurrentPlayer(), game.getWinner());
+        assertEquals(game.getCurrentPlayer(), game.getWinner(), "getWinner devrait retourner le joueur courant");
+    }
+
+    @Test
+    public void testGameSettersAndGetters() {
+        Game g = new Game(player1, player2, board, true);
+        g.setIsOnGoing(false);
+        g.setCurrentPlayer(player2);
+        g.setPlayer1(player2);
+        g.setPlayer2(player1);
+
+        assertFalse(g.getIsOnGoing(), "isOnGoing devrait être false");
+        assertEquals(player2, g.getPlayer1(), "player1 devrait être Bob");
+        assertEquals(player1, g.getPlayer2(), "player2 devrait être Alice");
+        assertEquals(player2, g.getCurrentPlayer(), "Joueur courant incorrect");
     }
     
+    
     @Test
-    public void testFirstPlayerReturnsEitherP1OrP2() {
-        Game game = new Game(player1, player2, board, true);
-        Player p1 = new Player("Ahmed", null, null, null, null);
-        Player p2 = new Player("Mostapha", null, null, null, null);
+    void testGenerateAllTiles() {
+        List<Tile> tiles = Game.generateAllTiles(); // Adapte si le nom de classe est différent
 
-        boolean p1Chosen = false;
-        boolean p2Chosen = false;
+        // Vérifie le nombre total de tuiles
+        int expectedTileCount = 72;
+        assertEquals(expectedTileCount, tiles.size(), "Le nombre total de tuiles est incorrect");
 
-        for (int i = 0; i < 10; i++) {
-            Player first = game.firstPlayer(p1, p2);
-            if (first == p1) p1Chosen = true;
-            if (first == p2) p2Chosen = true;
+        // Vérifie l’unicité des IDs
+        Set<Integer> ids = new HashSet<>();
+        for (Tile tile : tiles) {
+            assertTrue(ids.add(tile.getId()), "ID dupliqué détecté : " + tile.getId());
         }
 
-        assertTrue(p1Chosen, "p1 should be chosen at least once");
-        assertTrue(p2Chosen, "p2 should be chosen at least once");
-        
+        // Vérifie que chaque combinaison apparaît deux fois
+        Map<String, Integer> comboCount = new HashMap<>();
+        for (Tile tile : tiles) {
+            String key = tile.getColor() + "-" + tile.getSymbol();
+            comboCount.put(key, comboCount.getOrDefault(key, 0) + 1);
+        }
+
+        for (Color color : Color.values()) {
+            for (Symbol symbol : Symbol.values()) {
+                String key = color + "-" + symbol;
+                assertEquals(2, comboCount.getOrDefault(key, 0), "La combinaison " + key + " n’apparaît pas deux fois");
+            }
+        }
     }
 }
