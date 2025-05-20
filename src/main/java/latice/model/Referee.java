@@ -15,6 +15,14 @@ public class Referee {
         this.player1 = player1;
         this.player2 = player2;
     }
+    
+    
+    private void fillRack(Player player) {
+        while (player.getRack().size() < RACK_SIZE && !player.getDeck().isEmpty()) {
+            Tile tile = player.getDeck().remove(0);
+            player.getRack().add(tile);
+        }
+    }
 
     public void initializeGame() {
         List<Tile> allTiles = Game.generateAllTiles();
@@ -28,11 +36,6 @@ public class Referee {
         fillRack(player2);
     }
 
-    private void fillRack(Player player) {
-        while (player.getRack().size() < RACK_SIZE && !player.getDeck().isEmpty()) {
-            Tile tile = player.getDeck().remove(0);
-            player.getRack().add(tile);
-        }
-    }
+    
 
 }

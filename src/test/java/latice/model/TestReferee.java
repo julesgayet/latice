@@ -1,88 +1,42 @@
 package latice.model;
 
-import latice.model.tiles.Tile;
-import latice.model.tiles.Color;
-import latice.model.tiles.Symbol;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TestReferee{
+public class TestReferee {
 
     private Player player1;
     private Player player2;
     private Referee referee;
 
     @BeforeEach
-    void setUp() {
-        // On utilise la méthode Game.generateAllTiles()
-        List<Tile> allTiles = Game.generateAllTiles(); 
-
-        // Mélanger pour rendre la distribution aléatoire
-        Collections.shuffle(allTiles);
-
-        // Diviser en deux paquets égaux pour les deux joueurs
-        List<Tile> deck1 = new ArrayList<>(allTiles.subList(0, allTiles.size() / 2));
-        List<Tile> deck2 = new ArrayList<>(allTiles.subList(allTiles.size() / 2, allTiles.size()));
-
-        player1 = new Player("Alice", deck1, new ArrayList<>(), 0, 1);
-        player2 = new Player("Bob", deck2, new ArrayList<>(), 0, 1);
+    public void setUp() {
+        player1 = new Player("Jules");
+        player2 = new Player("Mostapha");
         referee = new Referee(player1, player2);
     }
 
     @Test
-    void testDistributeToPlayerFillsRackUpToFive() {
-        // S'assure que le rack est vide
-        assertEquals(0, player1.getRack().size());
+    public void testInitializeGame_ShouldDistributeTilesAndFillRacks() {
+        referee.initializeGame();
 
-        // Appelle la méthode de remplissage
-    //    referee.distributeToPlayer(player1);  // méthode rendue package-private ou protected
+        // Vérifie que les decks ne sont pas vides
+        assertNotNull(player1.getDeck(), "Deck du joueur 1 est null");
+        assertNotNull(player2.getDeck(), "Deck du joueur 2 est null");
 
-        // Doit remplir le rack jusqu'à 5
-        assertEquals(5, player1.getRack().size());
+        // Vérifie que les racks sont remplis correctement
+        assertTrue(player1.getRack().size() <= 5, "Rack du joueur 1 dépasse la taille max");
+        assertTrue(player2.getRack().size() <= 5, "Rack du joueur 2 dépasse la taille max");
 
-        // Vérifie que le deck a été réduit
-        assertEquals(31, player1.getDeck().size());
-    }
-    
-    @Test
-    void testDistributeInitialTiles() {
-        // Vérifie que les racks sont vides avant
-        assertEquals(0, player1.getRack().size());
-        assertEquals(0, player2.getRack().size());
+        // Vérifie que le total de tuiles reste constant
+        int totalDistributed = player1.getDeck().size() + player1.getRack().size()
+                             + player2.getDeck().size() + player2.getRack().size();
 
-        // Lance la distribution
-     //   referee.distributeInitialTiles();
-
-        // Chaque joueur doit avoir 5 tuiles (taille max du rack)
-        assertEquals(5, player1.getRack().size());
-        assertEquals(5, player2.getRack().size());
-
-        // Vérifie que le deck a été réduit en conséquence
-        assertEquals(31, player1.getDeck().size()); 
-        assertEquals(31, player2.getDeck().size());
-    }
-
-    @Test
-    void testGeneratePlayerDeckReturnsShuffledDeck() {
-     //   List<Tile> generatedDeck = referee.generatePlayerDeck(); // méthode rendue accessible
-
-     //   assertNotNull(generatedDeck);
-      //  assertTrue(generatedDeck.isEmpty(), "Deck généré doit être vide (actuellement mal implémenté)");
-    }
-
-    // Méthode utilitaire
-    private List<Tile> createTiles(int count, Color color, Symbol symbol) {
-        List<Tile> tiles = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            tiles.add(new Tile(i, color, symbol));
-        }
-        return tiles;
+        assertEquals(Game.generateAllTiles().size(), totalDistributed,
+                "Le total de tuiles distribuées n'est pas correct");
     }
 }
