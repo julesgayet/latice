@@ -26,7 +26,7 @@ public class Main extends Application {
 	    Player p2 = new Player("Player 2", new ArrayList<>(), new ArrayList<>(), 0, 1);
 	    
 	    Game game = new Game(p1, p2, new Board(), true);
-	    Referee referee = new Referee(p1, p2);
+	    Referee referee = new Referee(p1, p2, game);
 	    referee.initializeGame();
 
 	    Player startingPlayer = game.firstPlayer(p1, p2);

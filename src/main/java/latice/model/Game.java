@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import latice.model.board.Board;
+import latice.model.board.Position;
 import latice.model.tiles.Color;
 import latice.model.tiles.Symbol;
 import latice.model.tiles.Tile;
@@ -19,6 +20,7 @@ public class Game {
 	private Board board;
 	private Player currentPlayer;
 	private Boolean isOnGoing;
+	private int round;
 	
 	public Game(Player p1, Player p2, Board board, Boolean isOnGoing) {
 	        this.player1 = p1;
@@ -26,6 +28,7 @@ public class Game {
 	        this.board = board;
 	        this.currentPlayer = firstPlayer(p1,p2);
 	        this.isOnGoing = isOnGoing;
+	        this.round = 1;
 	    }
 	
 	
@@ -55,6 +58,27 @@ public class Game {
 	    	return p2;
 	    }
 	}
+	
+	public boolean isFirstTurn(Tile tile, Position pos, Player player) {
+        // Vérifie si c'est le premier tourr
+        if (getRound() == 1) {
+            // Seul le joueur courant peut jouer
+            if (getCurrentPlayer() != player) {
+                return false;
+            } 
+
+            // La tuile doit être posée au centre du plateau
+            if (pos.getPosX() != 4 || pos.getPosY() != 4) {
+                return false;
+            }
+
+            //  la position doit être valide selon les règles normales
+            return getBoard().isPlacementValid(tile, pos);
+        }
+
+        // Si ce n'est pas le premier tour, on ne vérifie rien ici
+        return true;
+    }
 
 	 public Player getWinner() {
 		return currentPlayer;
@@ -95,6 +119,17 @@ public class Game {
 	
 	public void switchTurn() {
 	    this.currentPlayer = (this.currentPlayer == player1) ? player2 : player1;
+	    this.round++;
+	}
+
+
+	public int getRound() {
+		return round;
+	}
+
+
+	public void setRound(int round) {
+		this.round = round;
 	}
 	
 

@@ -3,11 +3,14 @@ package latice.model.board;
 import java.util.ArrayList;
 import java.util.List;
 
+import latice.model.Game;
+import latice.model.Player;
 import latice.model.tiles.Tile;
 
 public class Board {
     private final int size = 9;
     private Cell[][] grid;
+    private Game game;
 
     public Board() {
         grid = new Cell[size][size]; 
@@ -57,6 +60,7 @@ public class Board {
 	    public Cell[][] getGrid() {
 	        return grid;
 	    }
+	    
 		
 		public void placeTile(Tile tile, Position pos) {
 			
@@ -126,3 +130,5 @@ public class Board {
 		}
 
 }
+
+		

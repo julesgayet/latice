@@ -10,10 +10,12 @@ public class Referee {
     private Player player1;
     private Player player2;
     private final int RACK_SIZE = 5;
+	private Game game;
 
-    public Referee(Player player1, Player player2) {
+    public Referee(Player player1, Player player2, Game game) {
         this.player1 = player1;
         this.player2 = player2;
+        this.game = game;
     }
     
     
@@ -26,7 +28,7 @@ public class Referee {
 
     public void initializeGame() {
         List<Tile> allTiles = Game.generateAllTiles();
-        Collections.shuffle(allTiles);
+        Collections.shuffle(allTiles); 
 
         int mid = allTiles.size() / 2;
         player1.Deck(new ArrayList<>(allTiles.subList(0, mid)));
@@ -35,6 +37,8 @@ public class Referee {
         fillRack(player1);
         fillRack(player2);
     }
+    
+    
 
     
 

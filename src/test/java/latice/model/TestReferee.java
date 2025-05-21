@@ -17,7 +17,7 @@ public class TestReferee {
     public void setUp() {
         player1 = new Player("Jules");
         player2 = new Player("Mostapha");
-        referee = new Referee(player1, player2);
+        referee = new Referee(player1, player2, null);
     }
 
     @Test
