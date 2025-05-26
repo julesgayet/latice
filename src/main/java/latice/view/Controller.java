@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import latice.model.Player;
 import latice.model.tiles.Tile;
 import latice.model.tiles.TileUtils;
@@ -27,6 +30,24 @@ public class Controller {
     public void initialize() {
         // Regrouper les slots dans un tableau pour simplifier l'accès
         rackSlots = new ImageView[] { rack_1, rack_2, rack_3, rack_4, rack_5 };
+        for (ImageView slot : rackSlots) {
+            slot.setOnDragDetected(event -> {
+                if (slot.getImage() != null) {
+                    Dragboard db = slot.startDragAndDrop(TransferMode.MOVE);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putString(slot.getId()); // par ex. rack_1, rack_2…
+                    db.setContent(content);
+                    db.setDragView(slot.getImage());
+                }
+                event.consume();
+            });
+        }
+        lbl_deck.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                setupDeckSquares();
+            }
+        });
+
     }
 
     public void updateView(List<Tile> tiles,Player player) {
@@ -60,6 +81,42 @@ public class Controller {
     
     }
     
+    private void setupDeckSquares() {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                String squareId = String.format("square_%d%d", row, col);
+                ImageView square = (ImageView) lbl_deck.getScene().lookup("#" + squareId);
+
+                if (square != null) {
+                    square.setOnDragOver(event -> {
+                        if (event.getGestureSource() != square && event.getDragboard().hasString()) {
+                            event.acceptTransferModes(TransferMode.MOVE);
+                        }
+                        event.consume();
+                    });
+
+                    square.setOnDragDropped(event -> {
+                        Dragboard db = event.getDragboard();
+                        boolean success = false;
+                        if (db.hasString()) {
+                            String rackId = db.getString();
+                            ImageView draggedSlot = (ImageView) lbl_deck.getScene().lookup("#" + rackId);
+                            if (draggedSlot != null && draggedSlot.getImage() != null) {
+                                square.setImage(draggedSlot.getImage());
+                                draggedSlot.setImage(null); // vide le rack
+                                success = true;
+                            }
+                        }
+                        event.setDropCompleted(success);
+                        event.consume();
+                    });
+                } else {
+                    System.err.println("Case non trouvée : " + squareId);
+                }
+            }
+        }
+    }
+
     
 
 }
