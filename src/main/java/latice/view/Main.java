@@ -68,7 +68,7 @@ public class Main extends Application {
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GraphicBoard.fxml"));
 	        Parent root = loader.load();  // charger la vue
 
-	        RackController rackController = loader.getController();  // récupérer le contrôleur 
+	        Controller rackController = loader.getController();  // récupérer le contrôleur 
 	        if (rackController == null) {
 	            System.err.println("Erreur: rackController est null après chargement du FXML");
 	            return;

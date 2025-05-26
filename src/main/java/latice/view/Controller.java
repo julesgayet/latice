@@ -11,7 +11,7 @@ import latice.model.tiles.TileUtils;
 import java.net.URL;
 import java.util.List;
 
-public class RackController {
+public class Controller {
 
     @FXML private ImageView rack_1;
     @FXML private ImageView rack_2;
