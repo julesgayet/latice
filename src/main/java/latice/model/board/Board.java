@@ -48,8 +48,29 @@ public class Board {
             }
         }
 	}
+    
+    public boolean hasTileIn() {
+        for (int row = 0; row < grid.length; row++) {
+            for (int col = 0; col < grid[row].length; col++) {
+                Cell cell = grid[row][col];
+                if (cell == null) continue;
+
+                CellType type = cell.getType(); // suppose que tu as une méthode getType()
+
+                if (type == CellType.TILE_IN) {
+                    return true; 
+            }
+        }
+    }
+		return false;
+    }
+
 	
-	    public int getSize() {
+	    public void setGrid(Cell[][] grid) {
+		this.grid = grid;
+	}
+
+		public int getSize() {
 	        return size;
 	    }
 	
