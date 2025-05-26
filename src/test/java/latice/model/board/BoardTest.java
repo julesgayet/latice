@@ -98,4 +98,38 @@ class BoardTest {
         assertTrue(adj.contains(t2));
     }
 
+    @Test
+    public void testHasTileIn_NoValidCells_ShouldReturnFalse() {
+        Board board = new Board();
+        Cell[][] grid = new Cell[2][2];
+
+        grid[0][0] = new Cell(CellType.NORMAL);
+        grid[0][1] = new Cell(CellType.SUN);
+        grid[1][0] = new Cell(CellType.MOON);
+        grid[1][1] = new Cell(CellType.NORMAL);
+
+        board.setGrid(grid);
+
+        assertFalse(board.hasTileIn());
+    }
+
+    @Test
+    public void testHasTileIn_WithTileIn_ShouldReturnTrue() {
+        Board board = new Board();
+        Cell[][] grid = new Cell[2][2];
+
+        grid[0][0] = new Cell(CellType.NORMAL);
+        grid[0][1] = new Cell(CellType.TILE_IN); // <- celle-ci valide
+        grid[1][0] = null;
+        grid[1][1] = new Cell(CellType.MOON);
+
+        board.setGrid(grid); // ou board.grid = grid
+
+        assertTrue(board.hasTileIn());
+    }
+
+
+
+    
+
 }
