@@ -68,13 +68,13 @@ public class Main extends Application {
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GraphicBoard.fxml"));
 	        Parent root = loader.load();  // charger la vue
 
-	        Controller rackController = loader.getController();  // récupérer le contrôleur 
-	        if (rackController == null) {
-	            System.err.println("Erreur: rackController est null après chargement du FXML");
+	        Controller controller = loader.getController();  // récupérer le contrôleur 
+	        if (controller == null) {
+	            System.err.println("Erreur: Controller est null après chargement du FXML");
 	            return;
 	        }
 
-	        rackController.updateView(startingPlayer.getRack(),game.getCurrentPlayer());  // mettre à jour la vue
+	        controller.updateView(startingPlayer.getRack(),game.getCurrentPlayer());  // mettre à jour la vue
 
 	     
 	        primaryStage.setTitle("Jeu Latice");
