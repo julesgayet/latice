@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import latice.model.board.Position;
 import latice.model.tiles.Tile;
 
 public class Referee {
@@ -38,8 +39,10 @@ public class Referee {
         fillRack(player2);
     }
     
-    
+    public boolean isValidMove(Tile tile, int row, int col,Game game) {
+        Position pos = new Position(row, col);
+        return game.getBoard().isPlacementValid(tile, pos,game);
+    }
 
-    
 
 }

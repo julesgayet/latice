@@ -26,11 +26,12 @@ public class Main extends Application {
 	    Player p2 = new Player("Player 2", new ArrayList<>(), new ArrayList<>(), 0, 1);
 	    
 	    Game game = new Game(p1, p2, new Board(), true);
+	    
+
 	    Referee referee = new Referee(p1, p2, game);
 	    referee.initializeGame();
 
 	    Player startingPlayer = game.firstPlayer(p1, p2);
-	    
 	    
 
 	    Stage splashStage = new Stage();
@@ -56,24 +57,27 @@ public class Main extends Application {
 	    // Wait 1 second
 	    PauseTransition delay = new PauseTransition(Duration.seconds(1));
 	    delay.setOnFinished(event -> {
-	    	showMainGameWindow(primaryStage,startingPlayer,game);
+	    	showMainGameWindow(primaryStage,startingPlayer,game,referee);
 	    	splashStage.close();
 	        
 	    });
 	    delay.play();
 	}
 
-	private void showMainGameWindow(Stage primaryStage,Player startingPlayer, Game game) {
+	private void showMainGameWindow(Stage primaryStage,Player startingPlayer, Game game,Referee referee) {
 		try {
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GraphicBoard.fxml"));
 	        Parent root = loader.load();  // charger la vue
 
-	        Controller controller = loader.getController();  // récupérer le contrôleur 
+	        Controller controller = loader.getController();  // récupérer le contrôleur
+	        
+
 	        if (controller == null) {
 	            System.err.println("Erreur: Controller est null après chargement du FXML");
 	            return;
 	        }
-
+	        controller.setReferee(referee);
+	        controller.setGame(game);
 	        controller.updateView(startingPlayer.getRack(),game.getCurrentPlayer());  // mettre à jour la vue
 
 	     
