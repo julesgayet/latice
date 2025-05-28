@@ -103,19 +103,33 @@ public class Board {
 		    if (row < 0 || row >= size || col < 0 || col >= size) {
 		        return false;
 		    }
+<<<<<<< Updated upstream
 	
+=======
+		    
+		    
+>>>>>>> Stashed changes
 		    Cell cell = getCell(row, col);
 	
 		    // La case doit être vide
 		    if (!cell.isEmpty()) {
 		        return false;
 		    }
-	
+		    
+
+		    else if(game.getRound()==1 || row == 4 || col == 4) {
+		    	return true;
+		    }
+		    
+		    
 		    // Il faut au moins une tuile adjacente compatible
 		    List<Tile> adjacents = getAdjacentTiles(pos);
 		    for (Tile adj : adjacents) {
-		        if (adj.getColor() == tile.getColor() || adj.getSymbol() == tile.getSymbol()) {
+		        if (adj.getColor() == tile.getColor()) {
 		            return true;
+		        
+		        }else if( adj.getSymbol() == tile.getSymbol()) {
+		        	return true;
 		        }
 		    }
 	
