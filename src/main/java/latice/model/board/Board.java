@@ -83,9 +83,9 @@ public class Board {
 	    }
 	    
 		
-		public void placeTile(Tile tile, Position pos) {
+		public void placeTile(Tile tile, Position pos,Game game) {
 			
-			if (isPlacementValid(tile, pos)) {
+			if (isPlacementValid(tile, pos,game)) {
 		        throw new IllegalArgumentException("Placement invalide.");
 		    }
 	
@@ -94,7 +94,7 @@ public class Board {
 		    tile.InGame(true);
 		}
 		
-		public boolean isPlacementValid(Tile tile, Position pos) {
+		public boolean isPlacementValid(Tile tile, Position pos, Game game) {
 			
 			int row = pos.getPosX();
 		    int col = pos.getPosY();
@@ -103,12 +103,20 @@ public class Board {
 		    if (row < 0 || row >= size || col < 0 || col >= size) {
 		        return false;
 		    }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 	
 =======
 		    
 		    
 >>>>>>> Stashed changes
+=======
+		    
+		    if(game.getRound()==1 || row == 4 || col == 4) {
+		    	return true;
+		    }
+		    
+>>>>>>> origin/V5
 		    Cell cell = getCell(row, col);
 	
 		    // La case doit être vide

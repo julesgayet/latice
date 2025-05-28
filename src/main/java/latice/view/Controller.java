@@ -7,7 +7,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import latice.model.Game;
 import latice.model.Player;
+import latice.model.Referee;
+import latice.model.board.Position;
 import latice.model.tiles.Tile;
 import latice.model.tiles.TileUtils;
 
@@ -26,16 +29,67 @@ public class Controller {
 
     private ImageView[] rackSlots;
 
-    @FXML
+    private Referee referee;
+    private Game game;
+
+    public void setReferee(Referee referee) {
+        this.referee = referee;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+    
+
+    public ImageView getRack_1() {
+		return rack_1;
+	}
+
+	public ImageView getRack_2() {
+		return rack_2;
+	}
+
+	public ImageView getRack_3() {
+		return rack_3;
+	}
+
+	public ImageView getRack_4() {
+		return rack_4;
+	}
+
+	public ImageView getRack_5() {
+		return rack_5;
+	}
+
+	public Label getLbl_deck() {
+		return lbl_deck;
+	}
+
+	public Label getLbl_player() {
+		return lbl_player;
+	}
+
+	public ImageView[] getRackSlots() {
+		return rackSlots;
+	}
+
+	public Referee getReferee() {
+		return referee;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	@FXML
     public void initialize() {
-        // Regrouper les slots dans un tableau pour simplifier l'accès
         rackSlots = new ImageView[] { rack_1, rack_2, rack_3, rack_4, rack_5 };
         for (ImageView slot : rackSlots) {
             slot.setOnDragDetected(event -> {
                 if (slot.getImage() != null) {
                     Dragboard db = slot.startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
-                    content.putString(slot.getId()); // par ex. rack_1, rack_2…
+                    content.putString(slot.getId()); // ex: rack_1, rack_2…
                     db.setContent(content);
                     db.setDragView(slot.getImage());
                 }
@@ -47,40 +101,37 @@ public class Controller {
                 setupDeckSquares();
             }
         });
-
     }
 
-    public void updateView(List<Tile> tiles,Player player) {
+    public void updateView(List<Tile> tiles, Player player) {
         for (int i = 0; i < rackSlots.length; i++) {
             if (i < tiles.size()) {
                 String path = TileUtils.getImagePath(tiles.get(i));
                 URL url = getClass().getResource(path);
 
-                // Test de débogage
                 if (url == null) {
                     System.err.println("Image non trouvée pour le chemin : " + path);
                 } else {
                     rackSlots[i].setImage(new Image(url.toExternalForm()));
                 }
-
             } else {
                 rackSlots[i].setImage(null);
-                
             }
         }
-        
-        
-        // Mettre à jour les labels
+
         if ("Player 1".equals(player.getName())) {
-        	lbl_player.setText("1");
-        }
-        else {
-        	lbl_player.setText("2");
+            lbl_player.setText("1");
+        } else {
+            lbl_player.setText("2");
         }
         lbl_deck.setText(Integer.toString(player.getDeck().size()));
-    
     }
-    
+
+    private Tile getTileFromRack(String rackId) {
+        int index = Integer.parseInt(rackId.split("_")[1]) - 1; // rack_1 → index 0
+        return game.getCurrentPlayer().getRack().get(index);
+    }
+
     private void setupDeckSquares() {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
@@ -88,6 +139,9 @@ public class Controller {
                 ImageView square = (ImageView) lbl_deck.getScene().lookup("#" + squareId);
 
                 if (square != null) {
+                    int finalRow = row;
+                    int finalCol = col;
+
                     square.setOnDragOver(event -> {
                         if (event.getGestureSource() != square && event.getDragboard().hasString()) {
                             event.acceptTransferModes(TransferMode.MOVE);
@@ -102,9 +156,22 @@ public class Controller {
                             String rackId = db.getString();
                             ImageView draggedSlot = (ImageView) lbl_deck.getScene().lookup("#" + rackId);
                             if (draggedSlot != null && draggedSlot.getImage() != null) {
-                                square.setImage(draggedSlot.getImage());
-                                draggedSlot.setImage(null); // vide le rack
-                                success = true;
+                                Tile draggedTile = getTileFromRack(rackId);
+                                
+                                if (referee.isValidMove(draggedTile, finalRow, finalCol,getGame())) {
+                                    square.setImage(draggedSlot.getImage());
+                                    draggedSlot.setImage(null);
+
+                                    // Update model: remove from rack, place on board
+                                    game.getCurrentPlayer().getRack().remove(draggedTile);
+                                    game.getBoard().getCell(finalRow, finalCol).setTile(draggedTile);
+
+                                    success = true;
+                                    System.out.println("Placement valide !");
+                                } else {
+                                    System.out.println("Placement invalide !");
+                                    // Ici tu pourrais afficher un label ou une alerte
+                                }
                             }
                         }
                         event.setDropCompleted(success);
@@ -116,7 +183,4 @@ public class Controller {
             }
         }
     }
-
-    
-
 }
