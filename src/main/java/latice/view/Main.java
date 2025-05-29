@@ -31,7 +31,7 @@ public class Main extends Application {
 	    Referee referee = new Referee(p1, p2, game);
 	    referee.initializeGame();
 
-	    Player startingPlayer = game.firstPlayer(p1, p2);
+	    Player startingPlayer = game.getCurrentPlayer();
 	    
 
 	    Stage splashStage = new Stage();

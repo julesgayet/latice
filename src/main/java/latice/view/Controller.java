@@ -1,6 +1,8 @@
 package latice.view;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -39,63 +41,33 @@ public class Controller {
     public void setGame(Game game) {
         this.game = game;
     }
-    
 
-    public ImageView getRack_1() {
-		return rack_1;
-	}
-
-	public ImageView getRack_2() {
-		return rack_2;
-	}
-
-	public ImageView getRack_3() {
-		return rack_3;
-	}
-
-	public ImageView getRack_4() {
-		return rack_4;
-	}
-
-	public ImageView getRack_5() {
-		return rack_5;
-	}
-
-	public Label getLbl_deck() {
-		return lbl_deck;
-	}
-
-	public Label getLbl_player() {
-		return lbl_player;
-	}
-
-	public ImageView[] getRackSlots() {
-		return rackSlots;
-	}
-
-	public Referee getReferee() {
-		return referee;
-	}
-
-	public Game getGame() {
-		return game;
-	}
-
-	@FXML
+    @FXML
     public void initialize() {
+    	
         rackSlots = new ImageView[] { rack_1, rack_2, rack_3, rack_4, rack_5 };
+        
         for (ImageView slot : rackSlots) {
+        	
+        	System.out.println("Slot enregistré : " + slot + " → id=" + slot.getId());
+        	    // … tes setOnDragDetected déjà là
+        	
+
             slot.setOnDragDetected(event -> {
-                if (slot.getImage() != null) {
+                int index = getSlotIndex(slot.getId());
+                if (index >= 0 && index < game.getCurrentPlayer().getRack().size()) {
                     Dragboard db = slot.startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
-                    content.putString(slot.getId()); // ex: rack_1, rack_2…
+                    content.putString(slot.getId());
                     db.setContent(content);
                     db.setDragView(slot.getImage());
+                } else {
+                    System.out.println("Aucune tuile à déplacer pour " + slot.getId());
                 }
                 event.consume();
             });
         }
+
         lbl_deck.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 setupDeckSquares();
@@ -119,17 +91,27 @@ public class Controller {
             }
         }
 
-        if ("Player 1".equals(player.getName())) {
-            lbl_player.setText("1");
-        } else {
-            lbl_player.setText("2");
-        }
+        lbl_player.setText(player.getName().equals("Player 1") ? "1" : "2");
         lbl_deck.setText(Integer.toString(player.getDeck().size()));
     }
 
+    private int getSlotIndex(String rackId) {
+        try {
+            return Integer.parseInt(rackId.split("_")[1]) - 1 ; // rack_1 → index 0
+        } catch (Exception e) {
+            System.err.println("Erreur pour récupérer l'index à partir de " + rackId);
+            return -1;
+        }
+    }
+
     private Tile getTileFromRack(String rackId) {
-        int index = Integer.parseInt(rackId.split("_")[1]) - 1; // rack_1 → index 0
-        return game.getCurrentPlayer().getRack().get(index);
+        int index = getSlotIndex(rackId);
+        List<Tile> rack = game.getCurrentPlayer().getRack();
+        if (index < 0 || index >= rack.size()) {
+            System.err.println("Pas de tuile dans le rack à l’index " + index + " (taille actuelle : " + rack.size() + ")");
+            return null;
+        }
+        return rack.get(index);
     }
 
     private void setupDeckSquares() {
@@ -155,22 +137,26 @@ public class Controller {
                         if (db.hasString()) {
                             String rackId = db.getString();
                             ImageView draggedSlot = (ImageView) lbl_deck.getScene().lookup("#" + rackId);
-                            if (draggedSlot != null && draggedSlot.getImage() != null) {
-                                Tile draggedTile = getTileFromRack(rackId);
-                                
-                                if (referee.isValidMove(draggedTile, finalRow, finalCol,getGame())) {
+                            Tile draggedTile = getTileFromRack(rackId);
+
+                            if (draggedSlot != null && draggedSlot.getImage() != null && draggedTile != null) {
+                                if (referee.isValidMove(draggedTile, finalRow, finalCol, game)) {
                                     square.setImage(draggedSlot.getImage());
                                     draggedSlot.setImage(null);
 
-                                    // Update model: remove from rack, place on board
                                     game.getCurrentPlayer().getRack().remove(draggedTile);
                                     game.getBoard().getCell(finalRow, finalCol).setTile(draggedTile);
 
                                     success = true;
                                     System.out.println("Placement valide !");
                                 } else {
-                                    System.out.println("Placement invalide !");
-                                    // Ici tu pourrais afficher un label ou une alerte
+                                	Alert alert = new Alert(AlertType.WARNING);
+                                    alert.setTitle("Placement invalide");
+                                    alert.setHeaderText(null); // pas de header
+                                    alert.setContentText("Vous ne pouvez pas placer cette tuile ici.");
+
+                                    // 2. Afficher et attendre que l'utilisateur ferme la fenêtre
+                                    alert.showAndWait();
                                 }
                             }
                         }

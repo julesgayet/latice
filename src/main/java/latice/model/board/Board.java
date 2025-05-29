@@ -66,111 +66,96 @@ public class Board {
     }
 
 	
-	    public void setGrid(Cell[][] grid) {
+	public void setGrid(Cell[][] grid) {
 		this.grid = grid;
 	}
 
-		public int getSize() {
-	        return size;
-	    }
+	public int getSize() {
+        return size;
+    }
+
+    public Cell getCell(int row, int col) {
+        return grid[row][col];
+    }
+
+    public Cell[][] getGrid() {
+        return grid;
+    }
+    
 	
-	    public Cell getCell(int row, int col) {
-	        return grid[row][col];
+	public void placeTile(Tile tile, Position pos,Game game) {
+		
+		if (isPlacementValid(tile, pos,game)) {
+	        throw new IllegalArgumentException("Placement invalide.");
 	    }
+
+	    Cell cell = getCell(pos.getPosX(), pos.getPosY());
+	    cell.setTile(tile);
+	    tile.InGame(true);
+	}
 	
-	    public Cell[][] getGrid() {
-	        return grid;
+	public boolean isPlacementValid(Tile tile, Position pos, Game game) {
+	    int row = pos.getPosX();
+	    int col = pos.getPosY();
+	    
+	    // 1) Vérifier les limites du plateau
+	    if (row < 0 || row >= size || col < 0 || col >= size) {
+	        return false;
 	    }
 	    
-		
-		public void placeTile(Tile tile, Position pos,Game game) {
-			
-			if (isPlacementValid(tile, pos,game)) {
-		        throw new IllegalArgumentException("Placement invalide.");
-		    }
-	
-		    Cell cell = getCell(pos.getPosX(), pos.getPosY());
-		    cell.setTile(tile);
-		    tile.InGame(true);
-		}
-		
-		public boolean isPlacementValid(Tile tile, Position pos, Game game) {
-			
-			int row = pos.getPosX();
-		    int col = pos.getPosY();
-	
-		    // On vérifie les limites du plateau
-		    if (row < 0 || row >= size || col < 0 || col >= size) {
-		        return false;
-		    }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-	
-=======
-		    
-		    
->>>>>>> Stashed changes
-=======
-		    
-		    if(game.getRound()==1 || row == 4 || col == 4) {
-		    	return true;
-		    }
-		    
->>>>>>> origin/V5
-		    Cell cell = getCell(row, col);
-	
-		    // La case doit être vide
-		    if (!cell.isEmpty()) {
-		        return false;
-		    }
-		    
+	    // 2) La case doit être vide
+	    Cell cell = getCell(row, col);
+	    if (!cell.isEmpty()) {
+	        return false;
+	    }
+	    
+	    // Calcul du centre (pour size = 9 → centre en (4,4))
+	    int center = size / 2;
+	    
+	    // 3) Premier tour : placement uniquement au centre
+	    if (game.getRound() == 1) {
+	        return row == center && col == center;
+	    }
+	    
+	    // 4) Tours suivants : il faut au moins une tuile adjacente de même couleur
+	    List<Tile> adjacents = getAdjacentTiles(pos);
+	    for (Tile adj : adjacents) {
+	        if (adj.getColor() == tile.getColor()) {
+	            return true;
+	        }
+	    }
+	    
+	    // Sinon on refuse
+	    return false;
+	}
 
-		    else if(game.getRound()==1 || row == 4 || col == 4) {
-		    	return true;
-		    }
-		    
-		    
-		    // Il faut au moins une tuile adjacente compatible
-		    List<Tile> adjacents = getAdjacentTiles(pos);
-		    for (Tile adj : adjacents) {
-		        if (adj.getColor() == tile.getColor()) {
-		            return true;
-		        
-		        }else if( adj.getSymbol() == tile.getSymbol()) {
-		        	return true;
-		        }
-		    }
-	
-		    return false;
-		    
-		}
-	
-		public List<Tile>  getAdjacentTiles(Position pos){
-			
-			List<Tile> adjacentTiles = new ArrayList<>();
-		    int row = pos.getPosX();
-		    int col = pos.getPosY();
-		    
-		    // 4 directions autour d'une case
-		    int[][] directions = { {-1,0}, {1,0}, {0,-1}, {0,1} };
-	
-		    for (int[] dir : directions) {
-		        int newRow = row + dir[0];
-		        int newCol = col + dir[1];
-		        
-		        // On vérifie que la case voisine est dans les limites du plateau
-		        if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
-		        	// On récupère la tuile située dans la case voisine, si il y en a une 
-		            Tile neighborTile = grid[newRow][newCol].getTile();
-		            // Ensuite si il y en a une, on l'ajoute a la liste
-		            if (neighborTile != null) {
-		                adjacentTiles.add(neighborTile);
-		            }
-		        }
+
+	public List<Tile>  getAdjacentTiles(Position pos){
+		
+		List<Tile> adjacentTiles = new ArrayList<>();
+	    int row = pos.getPosX();
+	    int col = pos.getPosY();
+	    
+	    // 4 directions autour d'une case
+	    int[][] directions = { {-1,0}, {1,0}, {0,-1}, {0,1} };
+
+	    for (int[] dir : directions) {
+	        int newRow = row + dir[0];
+	        int newCol = col + dir[1];
+	        
+	        // On vérifie que la case voisine est dans les limites du plateau
+	        if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
+	        	// On récupère la tuile située dans la case voisine, si il y en a une 
+	            Tile neighborTile = grid[newRow][newCol].getTile();
+	            // Ensuite si il y en a une, on l'ajoute a la liste
+	            if (neighborTile != null) {
+	                adjacentTiles.add(neighborTile);
+	            }
+	        }
 		    }
 	
-		    return adjacentTiles;
-		}
+	    return adjacentTiles;
+	}
 
 }
 
