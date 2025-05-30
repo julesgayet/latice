@@ -1,4 +1,4 @@
-package latice.view;
+package latice.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage; 
 import javafx.util.Duration;
+import latice.controller.Controller;
 import latice.model.Game;
 import latice.model.Player;
 import latice.model.Referee;
