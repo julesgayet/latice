@@ -3,12 +3,14 @@ package latice.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.event.ActionEvent;
 import latice.model.Game;
 import latice.model.Player;
 import latice.model.Referee;
@@ -28,6 +30,7 @@ public class Controller {
     @FXML private ImageView rack_5;
     @FXML private Label lbl_deck;
     @FXML private Label lbl_player;
+    @FXML private Button btnTurn;
 
     private ImageView[] rackSlots;
 
@@ -40,18 +43,15 @@ public class Controller {
 
     public void setGame(Game game) {
         this.game = game;
+        updateViewForCurrentPlayer();
     }
 
     @FXML
     public void initialize() {
-    	
         rackSlots = new ImageView[] { rack_1, rack_2, rack_3, rack_4, rack_5 };
-        
+
         for (ImageView slot : rackSlots) {
-        	
-        	System.out.println("Slot enregistré : " + slot + " → id=" + slot.getId());
-        	    // … tes setOnDragDetected déjà là
-        	
+            System.out.println("Slot enregistré : " + slot + " → id=" + slot.getId());
 
             slot.setOnDragDetected(event -> {
                 int index = getSlotIndex(slot.getId());
@@ -73,6 +73,24 @@ public class Controller {
                 setupDeckSquares();
             }
         });
+
+        // Configurer l'action du bouton pour changer le tour
+        btnTurn.setOnAction(this::handleTurnButton);
+    }
+
+    @FXML
+    private void handleTurnButton(ActionEvent event) {
+        // Changer le joueur courant
+        game.nextPlayer();
+        game.setRound(game.getRound()+1);
+        // Mettre à jour l'affichage pour le nouveau joueur
+        updateViewForCurrentPlayer();
+        System.out.println("Changement de tour effectué, c'est au tour de : " + game.getCurrentPlayer().getName());
+    }
+
+    private void updateViewForCurrentPlayer() {
+        Player player = game.getCurrentPlayer();
+        updateView(player.getRack(), player);
     }
 
     public void updateView(List<Tile> tiles, Player player) {
@@ -150,12 +168,10 @@ public class Controller {
                                     success = true;
                                     System.out.println("Placement valide !");
                                 } else {
-                                	Alert alert = new Alert(AlertType.WARNING);
+                                    Alert alert = new Alert(AlertType.WARNING);
                                     alert.setTitle("Placement invalide");
-                                    alert.setHeaderText(null); // pas de header
+                                    alert.setHeaderText(null);
                                     alert.setContentText("Vous ne pouvez pas placer cette tuile ici.");
-
-                                    // 2. Afficher et attendre que l'utilisateur ferme la fenêtre
                                     alert.showAndWait();
                                 }
                             }

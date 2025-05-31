@@ -122,6 +122,8 @@ public class Board {
 	    for (Tile adj : adjacents) {
 	        if (adj.getColor() == tile.getColor()) {
 	            return true;
+	        }else if (adj.getSymbol() == tile.getSymbol()) {
+	        	return true;
 	        }
 	    }
 	    

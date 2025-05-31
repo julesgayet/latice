@@ -79,6 +79,16 @@ public class Game {
         // Si ce n'est pas le premier tour, on ne vérifie rien ici
         return true;
     }
+	
+	public void nextPlayer() {
+		Player current = this.getCurrentPlayer();
+		if (current.getName()== "Player 1") {
+			this.setCurrentPlayer(getPlayer2());
+		}else {
+			this.setCurrentPlayer(getPlayer1());
+		}
+		
+	}
 
 	public Player getWinner() {
 		return currentPlayer;
