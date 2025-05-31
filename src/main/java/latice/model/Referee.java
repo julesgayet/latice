@@ -20,7 +20,7 @@ public class Referee {
     }
     
     
-    private void fillRack(Player player) {
+    public void fillRack(Player player) {
         while (player.getRack().size() < RACK_SIZE && !player.getDeck().isEmpty()) {
             Tile tile = player.getDeck().remove(0);
             player.getRack().add(tile);

@@ -81,6 +81,7 @@ public class Controller {
     @FXML
     private void handleTurnButton(ActionEvent event) {
         // Changer le joueur courant
+    	referee.fillRack(game.getCurrentPlayer());
         game.nextPlayer();
         game.setRound(game.getRound()+1);
         // Mettre à jour l'affichage pour le nouveau joueur
