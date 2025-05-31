@@ -44,5 +44,16 @@ public class Referee {
         return game.getBoard().isPlacementValid(tile, pos,game);
     }
 
+    public boolean isGameOver(Game game) {
+        Player p1 = game.getPlayer1();
+        Player p2 = game.getPlayer2();
 
+        boolean rack1Empty = p1.getRack().isEmpty();
+        boolean rack2Empty = p2.getRack().isEmpty();
+        // On suppose que TileUtils.drawTile() retourne null quand plus de tuiles dans la pioche.
+        boolean deckEmpty = (p1.getDeck().isEmpty() && p2.getDeck().isEmpty());
+        // Variante stricte : la partie est finie dès que les deux racks sont vides ET la pioche est vide.
+        return rack1Empty && rack2Empty && deckEmpty;
+    }
+    
 }
