@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.event.ActionEvent;
 import latice.model.Game;
 import latice.model.Player;
 import latice.model.Referee;
@@ -30,8 +29,10 @@ public class Controller {
     @FXML private ImageView rack_5;
     @FXML private Label lbl_deck;
     @FXML private Label lbl_player;
-    @FXML private Button btnTurn;
-
+    @FXML private Label lblScoreP2;
+    @FXML private Label lblScoreP1;
+    @FXML private Button btnSwapRack;
+    
     private ImageView[] rackSlots;
 
     private Referee referee;
@@ -49,7 +50,7 @@ public class Controller {
     @FXML
     public void initialize() {
         rackSlots = new ImageView[] { rack_1, rack_2, rack_3, rack_4, rack_5 };
-
+        btnSwapRack.setOnAction(event -> handleSwapRack());
         for (ImageView slot : rackSlots) {
             System.out.println("Slot enregistré : " + slot + " → id=" + slot.getId());
 
@@ -61,6 +62,7 @@ public class Controller {
                     content.putString(slot.getId());
                     db.setContent(content);
                     db.setDragView(slot.getImage());
+                    
                 } else {
                     System.out.println("Aucune tuile à déplacer pour " + slot.getId());
                 }
@@ -74,12 +76,10 @@ public class Controller {
             }
         });
 
-        // Configurer l'action du bouton pour changer le tour
-        btnTurn.setOnAction(this::handleTurnButton);
     }
 
     @FXML
-    private void handleTurnButton(ActionEvent event) {
+    private void handleTurn() {
         // Changer le joueur courant
     	referee.fillRack(game.getCurrentPlayer());
         game.nextPlayer();
@@ -92,6 +92,8 @@ public class Controller {
     private void updateViewForCurrentPlayer() {
         Player player = game.getCurrentPlayer();
         updateView(player.getRack(), player);
+        lblScoreP1.setText("Score Player 1 : "+game.getPlayer1().getScore());
+        lblScoreP2.setText("Score Player 2 : "+game.getPlayer2().getScore());
     }
 
     public void updateView(List<Tile> tiles, Player player) {
@@ -162,11 +164,26 @@ public class Controller {
                                 if (referee.isValidMove(draggedTile, finalRow, finalCol, game)) {
                                     square.setImage(draggedSlot.getImage());
                                     draggedSlot.setImage(null);
+                                    referee.applyScore(game, game.getCurrentPlayer(), draggedTile, new Position(finalRow, finalCol));
+                                    
 
                                     game.getCurrentPlayer().getRack().remove(draggedTile);
                                     game.getBoard().getCell(finalRow, finalCol).setTile(draggedTile);
 
                                     success = true;
+                                    handleTurn();
+                                    if (referee.isGameOver(game)) {
+                                        // Afficher la boîte de dialogue de fin
+                                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                        alert.setTitle("Fin de partie");
+                                        alert.setHeaderText(null);
+                                        Player winner = referee.getWinner(game);
+                                        String msg = String.format("The winner is : %s",
+                                            winner.getName()
+                                        );
+                                        alert.setContentText(msg);
+                                        alert.showAndWait();
+                                    }
                                     System.out.println("Placement valide !");
                                 } else {
                                     Alert alert = new Alert(AlertType.WARNING);
@@ -185,5 +202,25 @@ public class Controller {
                 }
             }
         }
+    }
+    
+    
+    private void handleSwapRack() {
+        Player current = game.getCurrentPlayer();
+        // Appel à la méthode swapRack() du Player (à implémenter dans Player.java)
+        List<Tile> oldRack = current.swapRack();
+        if (oldRack == null) {
+            // si swapRack() non implémentée ou deck vide
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Swap impossible");
+            alert.setHeaderText(null);
+            alert.setContentText("Impossible d'échanger le rack en ce moment.");
+            alert.showAndWait();
+            return;
+        }
+        // Les anciennes tuiles sont retournées par swapRack() dans oldRack et réinjectées dans le deck automatiquement
+        updateViewForCurrentPlayer();
+        lblScoreP1.setText("Score Player 1 : " + game.getPlayer1().getScore());
+        lblScoreP2.setText("Score Player 2 : " + game.getPlayer2().getScore());
     }
 }

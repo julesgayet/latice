@@ -159,6 +159,10 @@ public class Board {
 	    return adjacentTiles;
 	}
 
+	public Cell getCell(Position pos) {
+	    return getCell(pos.getPosX(), pos.getPosY());
+	}
+
 }
 
 		
