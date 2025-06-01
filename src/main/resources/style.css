@@ -1,0 +1,80 @@
+
+@font-face {
+    font-family: "Anton";
+    src: url("/font/Anton-Regular.ttf");
+}
+
+.label {
+    -fx-font-family: "Anton";  
+    -fx-font-size: 18px;              
+    -fx-text-fill: #2a2a2a;           
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.3) , 2,0,1,1 ); 
+    
+}
+
+
+#lblScoreP1 {
+    -fx-text-fill: #0033cc;  /* Bleu  */
+    -fx-font-size: 21px;
+}
+
+#lblScoreP2 {
+    -fx-text-fill: #cc0000;  /*rouge */
+    -fx-font-size: 21px;
+}
+
+
+#lblWinner {
+    -fx-font-family: "Anton";
+    -fx-font-size: 48px;
+    -fx-text-fill: gold;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 6,0,3,3 );
+}
+
+#lbl_player {
+    -fx-font-size: 35px;
+    -fx-text-fill: black;
+    -fx-font-family: "System"; 
+}
+
+#lbl_deck {
+	-fx-text-fill: gold;
+	-fx-font-family: "System";
+	-fx-font-size: 35px;
+}
+
+#btnSwapRack {
+    -fx-background-color: linear-gradient( to bottom right, #4CAF50, #2E7D32 );
+    -fx-text-fill: white;
+    -fx-font-family: "Anton";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;         
+    -fx-background-radius: 5px;     
+    -fx-border-radius: 5px;
+    -fx-border-color: #1B5E20;     
+    -fx-border-width: 2px;
+}
+
+
+#btnSwapRack:hover {
+    -fx-background-color: linear-gradient( to bottom right, #66BB6A, #388E3C );
+}
+
+
+#btnSwapRack:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #1B5E20, #145A18);
+    -fx-effect: innershadow(
+        three-pass-box,
+        rgba(0, 0, 0, 0.7),
+        8,0.0,0.0, 4.0 );
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
+}
+
+.game-background {
+    -fx-background-image: url("/img/fond3.png");
+    -fx-background-repeat: no-repeat;       
+    -fx-background-size: cover;             
+    -fx-background-position: center center;
+}
