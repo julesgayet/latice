@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import latice.model.board.Board;
+import latice.model.board.Cell;
+import latice.model.board.CellType;
 import latice.model.board.Position;
 import latice.model.tiles.Tile;
 
@@ -48,12 +51,56 @@ public class Referee {
         Player p1 = game.getPlayer1();
         Player p2 = game.getPlayer2();
 
-        boolean rack1Empty = p1.getRack().isEmpty();
-        boolean rack2Empty = p2.getRack().isEmpty();
-        // On suppose que TileUtils.drawTile() retourne null quand plus de tuiles dans la pioche.
-        boolean deckEmpty = (p1.getDeck().isEmpty() && p2.getDeck().isEmpty());
-        // Variante stricte : la partie est finie dès que les deux racks sont vides ET la pioche est vide.
-        return rack1Empty && rack2Empty && deckEmpty;
+        boolean p1Empty = p1.getRack().isEmpty() && p1.getDeck().isEmpty();
+        boolean p2Empty = p2.getRack().isEmpty() && p2.getDeck().isEmpty();
+
+        // Fin de partie si AU MOINS un joueur a à la fois rack vide et pioche vide
+        return p1Empty || p2Empty || (game.getRound()==20);
     }
+    
+    public int calculatePoints(Board board, Tile tile, Position pos) {
+        // 1) Recherche des voisins adjacents
+        List<Tile> adjacents = board.getAdjacentTiles(pos);
+        int matchingCount = 0;
+        for (Tile voisin : adjacents) {
+            if (voisin.getColor().equals(tile.getColor())
+             || voisin.getSymbol().equals(tile.getSymbol())) {
+                matchingCount++;
+            }
+        }
+
+        // 2) Points liés aux combos
+        int comboPoints = 0;
+        switch (matchingCount) {
+            case 2:
+                comboPoints = 1;
+                break;
+            case 3:
+                comboPoints = 2;
+                break;
+            case 4:
+                comboPoints = 4;
+                break;
+            default:
+                comboPoints = 0;
+        }
+
+        // 3) Bonus case SUN
+        Cell cell = board.getCell(pos);
+        int sunBonus = (cell.getType() == CellType.SUN) ? 2 : 0;
+
+        return comboPoints + sunBonus;
+    }
+
+    public void applyScore(Game game, Player player, Tile tile, Position pos) {
+        Board board = game.getBoard();
+        int points = calculatePoints(board, tile, pos);
+        player.addScore(points);
+    }
+
+
+	public Player getWinner(Game game) {
+		return game.getWinner();
+	}
     
 }

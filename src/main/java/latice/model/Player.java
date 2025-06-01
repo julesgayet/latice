@@ -47,16 +47,33 @@ public class Player {
         }
     }
 
+    public void addScore(Integer score) {
+    	this.Score(this.getScore()+ score);
+    }
+    
     public void buyExtraAction() {
         
     	//TODO
     }
 
-    public void swapRack() {
-        
-    	//TODO
+    public List<Tile> swapRack() {
+        // Exemple d’implémentation à adapter :
+        if (deck.size() < rack.size()) {
+            return null; // pas assez de tuiles dans le deck pour échanger
+        }
+        List<Tile> oldRack = new ArrayList<>(rack);
+        // Retire toutes les tuiles actuelles et les remet dans le deck
+        for (Tile t : oldRack) {
+            deck.add(t);
+        }
+        rack.clear();
+        // Pioche de nouvelles tuiles
+        for (int i = 0; i < oldRack.size(); i++) {
+            rack.add(deck.remove(0));
+        }
+        return oldRack;
     }
-
+    
     public void passTurn() {
         
     	//TODO
