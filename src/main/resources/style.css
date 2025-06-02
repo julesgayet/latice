@@ -43,6 +43,12 @@
 	-fx-font-size: 35px;
 }
 
+#lblRound {
+	-fx-text-fill: gold;
+	-fx-font-family: "Anton";
+	-fx-font-size: 31px;
+}
+
 #btnSwapRack {
     -fx-background-color: linear-gradient( to bottom right, #4CAF50, #2E7D32 );
     -fx-text-fill: white;

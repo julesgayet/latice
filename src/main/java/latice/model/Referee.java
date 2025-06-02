@@ -98,7 +98,6 @@ public class Referee {
         player.addScore(points);
     }
 
-
 	public Player getWinner(Game game) {
 		return game.getWinner();
 	}
