@@ -34,18 +34,6 @@ public class Player {
         this.score = 0;
         this.availableActions = 1;
     }
-    
-    
-    public void playTile(Tile tile, Position position) {
-    	
-    }
-
-    public void fillRack() {
-        while (rack.size() < 5 && !deck.isEmpty()) {
-            Tile tile = deck.remove(0);
-            rack.add(tile);
-        }
-    }
 
     public void addScore(Integer score) {
     	this.Score(this.getScore()+ score);

@@ -12,24 +12,6 @@ import java.util.*;
 class PlayerTest {
 
     @Test
-    void testRack() {
-        Player player = new Player("Mostapha");
-        List<Tile> rack = new ArrayList<>();
-        rack.add(new Tile(1, Color.RED, Symbol.DOLPHIN));
-        rack.add(new Tile(2, Color.DARK_BLUE, Symbol.DOLPHIN));
-
-        player.Rack(rack); 
-        assertEquals(rack, player.getRack()); 
-    }
-
-    @Test
-    void testScore() {
-        Player player = new Player("Ahmed");
-        player.Score(100);
-        assertEquals(100, player.getScore());
-    }
-
-    @Test
     void testAvailableActions() {
         Player player = new Player("Jules");
         player.AvailableActions(5);
@@ -70,5 +52,65 @@ class PlayerTest {
         assertEquals(rack, player.getRack());
         assertEquals(20, player.getScore());
         assertEquals(3, player.getAvailableActions());
+    }
+    
+    @Test
+    void testAddScoreWithInitialScore() {
+        Player player = new Player("Test");
+        player.Score(10);
+        player.addScore(5);
+        assertEquals(15, player.getScore());
+    }
+
+    @Test
+    void testSwapRack() {
+        List<Tile> deck = new ArrayList<>();
+        List<Tile> initialRack = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            deck.add(new Tile(i + 5, Color.GREEN, Symbol.LIZARD));
+            initialRack.add(new Tile(i, Color.RED, Symbol.FEATHER));
+        }
+        Player player = new Player("SwapTester", deck, initialRack, 0, 1);
+        List<Tile> oldRack = player.swapRack();
+
+        assertNotNull(oldRack);
+        assertEquals(5, oldRack.size());
+        assertEquals(5, player.getRack().size());
+    }
+    
+    @Test
+    void testSwapRackWithInsufficientDeck() {
+        List<Tile> deck = new ArrayList<>();
+        List<Tile> rack = new ArrayList<>();
+        rack.add(new Tile(1, Color.RED, Symbol.FEATHER));
+        Player player = new Player("Test", deck, rack, 0, 1);
+        
+        List<Tile> result = player.swapRack();
+        assertNull(result);
+    }
+
+    @Test
+    void testSetDeck() {
+        Player player = new Player("Test");
+        List<Tile> newDeck = new ArrayList<>();
+        newDeck.add(new Tile(1, Color.YELLOW, Symbol.DOLPHIN));
+        player.Deck(newDeck);
+        assertEquals(newDeck, player.getDeck());
+    }
+
+    @Test
+    void testSetRack() {
+        Player player = new Player("Test");
+        List<Tile> newRack = new ArrayList<>();
+        newRack.add(new Tile(2, Color.RED, Symbol.FEATHER));
+        player.Rack(newRack);
+        assertEquals(newRack, player.getRack());
+    }
+    
+    @Test
+    void testSetName() {
+        Player player = new Player("Initial");
+        player.Name("Updated");
+        assertEquals("Updated", player.getName());
     }
 }
