@@ -60,7 +60,6 @@ public class Main extends Application {
 	    delay.setOnFinished(event -> {
 	    	showMainGameWindow(primaryStage,startingPlayer,game,referee);
 	    	splashStage.close();
-	        
 	    });
 	    delay.play();
 	}

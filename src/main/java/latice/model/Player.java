@@ -40,7 +40,6 @@ public class Player {
     }
     
     public void buyExtraAction() {
-        
     	//TODO
     }
 
@@ -60,11 +59,6 @@ public class Player {
             rack.add(deck.remove(0));
         }
         return oldRack;
-    }
-    
-    public void passTurn() {
-        
-    	//TODO
     }
     
     

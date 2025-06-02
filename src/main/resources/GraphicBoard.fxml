@@ -44,7 +44,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" style="-fx-background-color: #f1efea;" styleClass="game-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="latice.controller.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: #f1efea;" styleClass="game-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="latice.controller.Controller">
 
    <center>
       <GridPane fx:id="boardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" style="-fx-border-color: #00008B; -fx-border-width: 25;" BorderPane.alignment="CENTER">
@@ -606,7 +606,7 @@
             <Insets top="50.0" />
          </padding>
          <children>
-            <Label alignment="CENTER" text="ROUND : 0">
+            <Label fx:id="lblRound" alignment="CENTER" text="ROUND : 0">
                <HBox.margin>
                   <Insets left="270.0" />
                </HBox.margin>

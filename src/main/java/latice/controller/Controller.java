@@ -95,6 +95,7 @@ public class Controller {
         updateView(player.getRack(), player);
         lblScoreP1.setText("Score Player 1 : "+game.getPlayer1().getScore());
         lblScoreP2.setText("Score Player 2 : "+game.getPlayer2().getScore());
+        lblRound.setText("ROUND : "+ game.getRound());
     }
 
     public void updateView(List<Tile> tiles, Player player) {
@@ -211,6 +212,7 @@ public class Controller {
         Player current = game.getCurrentPlayer();
         // Appel à la méthode swapRack() du Player (à implémenter dans Player.java)
         List<Tile> oldRack = current.swapRack();
+        handleTurn();
         if (oldRack == null) {
             // si swapRack() non implémentée ou deck vide
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -218,6 +220,8 @@ public class Controller {
             alert.setHeaderText(null);
             alert.setContentText("Impossible d'échanger le rack en ce moment.");
             alert.showAndWait();
+            game.setRound(game.getRound()+1);
+            
             return;
         }
         // Les anciennes tuiles sont retournées par swapRack() dans oldRack et réinjectées dans le deck automatiquement
