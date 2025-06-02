@@ -37,7 +37,7 @@ public class Main extends Application {
         // Label titre
         Label titleLabel = new Label("Noms des joueurs");
         titleLabel.setFont(antonFont);
-        titleLabel.setTextFill(Color.web("#FFD700"));
+        titleLabel.setTextFill(Color.web("gold"));
 
         // Champs texte
         TextField player1Field = new TextField();
@@ -51,13 +51,13 @@ public class Main extends Application {
         // Bouton
         Button startButton = new Button("Commencer la partie");
         startButton.setDefaultButton(true);
-        startButton.setStyle("-fx-background-color: #FFD700; -fx-text-fill: #2B50AA; -fx-font-size: 16px; -fx-background-radius: 16;");
+        startButton.setStyle("-fx-background-color: gold; -fx-text-fill: #ffffff; -fx-font-size: 16px; -fx-background-radius: 16;");
 
         VBox form = new VBox(18, titleLabel, player1Field, player2Field, startButton);
         form.setPadding(new Insets(32));
         form.setAlignment(javafx.geometry.Pos.CENTER);
         form.setStyle(
-            "-fx-background-color: #2B50AA; " +
+            "-fx-background-color: #de8f5e; " +
             "-fx-background-radius: 18; " +
             "-fx-border-radius: 18; " +
             "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);"

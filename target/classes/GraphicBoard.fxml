@@ -10,12 +10,16 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="1500.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="latice.controller.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="latice.controller.Controller">
    <children>
-      <GridPane fx:id="gridPane" layoutX="410.0" layoutY="150.0" prefHeight="700.0" prefWidth="700.0" style="-fx-border-color: #00008B; -fx-border-width: 25;">
+      <ImageView fitHeight="1000.0" fitWidth="1500.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@img/background.gif" />
+         </image>
+      </ImageView>
+      <GridPane fx:id="gridPane" layoutX="410.0" layoutY="150.0" prefHeight="700.0" prefWidth="700.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -581,6 +585,5 @@
             <Font size="21.0" />
          </font>
       </Label>
-      <MediaView fx:id="videoBackground" fitHeight="200.0" fitWidth="200.0" />
    </children>
 </AnchorPane>
