@@ -1,12 +1,14 @@
 package latice.model;
 
 import latice.model.board.Board;
+import latice.model.board.Position;
 import latice.model.tiles.Color;
 import latice.model.tiles.Symbol;
 import latice.model.tiles.Tile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -24,8 +26,8 @@ public class GameTest {
 
     @BeforeEach
     public void setUp() {
-        player1 = new Player("Mostapha");
-        player2 = new Player("Ahmed");
+        player1 = new Player("Player 1");
+        player2 = new Player("Player 2");
         board = new Board(); // supposons que Board a un constructeur vide
         game = new Game(player1, player2, board, true);
     }
@@ -93,5 +95,91 @@ public class GameTest {
                 assertEquals(2, comboCount.getOrDefault(key, 0), "La combinaison " + key + " n’apparaît pas deux fois");
             }
         }
+    }
+    
+    
+    @Test
+    void testIsFirstTurn_CorrectConditions() throws Exception {
+        // Création d'une tuile et position centrale
+        Tile tile = new Tile(1, Color.RED, Symbol.TURTLE);
+        Position pos = new Position(4, 4);
+        Player player = game.getCurrentPlayer();
+
+        // On force le round à 1 avec la réflexion
+        Field roundField = game.getClass().getDeclaredField("round");
+        roundField.setAccessible(true);
+        roundField.set(game, 1);
+
+        // On suppose que le plateau accepte ce placement
+        // (ajuste ou stub isPlacementValid dans Board si besoin)
+        boolean result = game.isFirstTurn(tile, pos, player, game);
+        assertTrue(result, "Premier tour, joueur courant, position centrale : doit être valide");
+    }
+
+    @Test
+    void testIsFirstTurn_WrongPlayerOrPosition() throws Exception {
+        Tile tile = new Tile(2, Color.DARK_BLUE, Symbol.SEAGULL);
+        Position posNotCenter = new Position(0, 0);
+        Player notCurrent = (game.getCurrentPlayer() == player1) ? player2 : player1;
+
+        // Forcer le round à 1
+        Field roundField = game.getClass().getDeclaredField("round");
+        roundField.setAccessible(true);
+        roundField.set(game, 1);
+
+        // Mauvais joueur
+        boolean result1 = game.isFirstTurn(tile, new Position(4, 4), notCurrent, game);
+        assertFalse(result1, "Seul le joueur courant peut jouer au premier tour");
+
+        // Mauvaise position
+        boolean result2 = game.isFirstTurn(tile, posNotCenter, game.getCurrentPlayer(), game);
+        assertFalse(result2, "Premier tour : la tuile doit être au centre");
+    }
+    
+    
+    @Test
+    void testNextPlayerSwitchesToPlayer2WhenPlayer1IsCurrent() {
+        // Forcer player1 comme joueur courant
+        game.setCurrentPlayer(player1);
+        game.nextPlayer();
+        assertEquals(player2, game.getCurrentPlayer(), "Doit passer de player1 à player2");
+    }
+
+    @Test
+    void testNextPlayerSwitchesToPlayer1WhenPlayer2IsCurrent() {
+        // Forcer player2 comme joueur courant
+        game.setCurrentPlayer(player2);
+        game.nextPlayer();
+        assertEquals(player1, game.getCurrentPlayer(), "Doit passer de player2 à player1");
+    }
+    
+    
+    @Test
+    void testIsFirstTurn_ReturnsTrueWhenNotFirstRound() throws Exception {
+        Tile tile = new Tile(1, Color.RED, Symbol.LIZARD);
+        Position pos = new Position(0, 0);
+        Player player = player1;
+
+        // On force le round à 2 (donc pas le premier tour)
+        java.lang.reflect.Field roundField = game.getClass().getDeclaredField("round");
+        roundField.setAccessible(true);
+        roundField.set(game, 2);
+
+        boolean result = game.isFirstTurn(tile, pos, player, game);
+
+        assertTrue(result, "isFirstTurn doit retourner true si ce n'est pas le premier tour (round != 1)");
+    }
+    
+    @Test
+    void testSetBoardSetsTheBoard() {
+        Board newBoard = new Board(); // Ou adapte selon ton constructeur Board
+        game.setBoard(newBoard);
+        assertEquals(newBoard, game.getBoard(), "setBoard doit modifier l'attribut board de la partie");
+    }
+    
+    @Test
+    void testSetRoundSetsTheRound() {
+        game.setRound(7);
+        assertEquals(7, game.getRound(), "setRound doit modifier l'attribut round de la partie");
     }
 }
