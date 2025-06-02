@@ -131,12 +131,16 @@ public class Board {
 	    }
 	    // 4) Tours suivants : il faut au moins une tuile adjacente de même couleur
 	    List<Tile> adjacents = getAdjacentTiles(pos);
+	    int valid = 0;
 	    for (Tile adj : adjacents) {
-	        if (adj.getColor() == tile.getColor()) {
-	            return true;
-	        }else if (adj.getSymbol() == tile.getSymbol()) {
-	        	return true;
+	        if (adj.getColor() == tile.getColor() || adj.getSymbol() == tile.getSymbol()) {
+	            valid+=1;
 	        }
+	    if (valid == adjacents.size()) {
+	    	return true;
+	    }else {
+	    	return false;
+	    }
 	    }
 	    
 	    // Sinon on refuse
