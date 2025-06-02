@@ -135,15 +135,14 @@ public class Board {
 	        if (adj.getColor() == tile.getColor() || adj.getSymbol() == tile.getSymbol()) {
 	            valid+=1;
 	        }
+	    }
 	    if (valid == adjacents.size()) {
 	    	return true;
 	    }else {
 	    	return false;
 	    }
-	    }
 	    
-	    // Sinon on refuse
-	    return false;
+	    
 	}
 
 
