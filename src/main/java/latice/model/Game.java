@@ -82,7 +82,7 @@ public class Game {
 	
 	public void nextPlayer() {
 		Player current = this.getCurrentPlayer();
-		if (current.getName()== "Player 1") {
+		if (current.getName()== this.getPlayer1().getName()) {
 			this.setCurrentPlayer(getPlayer2());
 		}else {
 			this.setCurrentPlayer(getPlayer1());

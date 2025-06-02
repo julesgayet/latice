@@ -93,8 +93,12 @@ public class Controller {
     private void updateViewForCurrentPlayer() {
         Player player = game.getCurrentPlayer();
         updateView(player.getRack(), player);
-        lblScoreP1.setText("Score Player 1 : "+game.getPlayer1().getScore());
-        lblScoreP2.setText("Score Player 2 : "+game.getPlayer2().getScore());
+        String playerName = game.getPlayer1().getName();
+        int score = game.getPlayer1().getScore();
+        String playerName2 = game.getPlayer2().getName();
+        int score2 = game.getPlayer2().getScore();
+        lblScoreP1.setText("Score " + playerName + " : " + score + " points");
+        lblScoreP2.setText("Score " + playerName2 + " : " + score2 + " points");
         lblRound.setText("ROUND : "+ (game.getRound()+1)/2);
     }
 
@@ -114,7 +118,7 @@ public class Controller {
             }
         }
 
-        lbl_player.setText(player.getName().equals("Player 1") ? "1" : "2");
+        lbl_player.setText(player.getName().equals(game.getPlayer1().getName()) ? game.getPlayer1().getName().substring(0, 1) : game.getPlayer2().getName().substring(0, 1));
         lbl_deck.setText(Integer.toString(player.getDeck().size()));
     }
 
@@ -212,18 +216,7 @@ public class Controller {
         Player current = game.getCurrentPlayer();
         // Appel à la méthode swapRack() du Player (à implémenter dans Player.java)
         List<Tile> oldRack = current.swapRack();
-        handleTurn();
-        if (referee.isGameOver(game)) {
-            // Afficher la boîte de dialogue de fin
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Fin de partie");
-            alert.setHeaderText(null);
-            Player winner = referee.getWinner(game);
-            String msg = String.format("Draw between the players ");
-            alert.setContentText(msg);
-            alert.showAndWait();
-            
-        }
+        handleTurn(); 
         if (oldRack == null) {
             // si swapRack() non implémentée ou deck vide
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -232,12 +225,16 @@ public class Controller {
             alert.setContentText("Impossible d'échanger le rack en ce moment.");
             alert.showAndWait();
             game.setRound(game.getRound()+1);
-            
+
             return;
         }
+        
         // Les anciennes tuiles sont retournées par swapRack() dans oldRack et réinjectées dans le deck automatiquement
         updateViewForCurrentPlayer();
-        lblScoreP1.setText("Score Player 1 : " + game.getPlayer1().getScore());
-        lblScoreP2.setText("Score Player 2 : " + game.getPlayer2().getScore());
-    }
-}
+        String playerName = game.getPlayer1().getName();
+        int score = game.getPlayer1().getScore();
+        String playerName2 = game.getPlayer2().getName();
+        int score2 = game.getPlayer2().getScore();
+        lblScoreP1.setText("Score " + playerName + " : " + score + " points");
+        lblScoreP2.setText("Score " + playerName2 + " : " + score2 + " points");
+    }}
