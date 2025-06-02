@@ -191,7 +191,9 @@ public class Controller {
                                         alert.setContentText(msg);
                                         alert.showAndWait();
                                         
+                                        
                                     }
+                                    
                                     System.out.println("Placement valide !");
                                 } else {
                                     Alert alert = new Alert(AlertType.WARNING);
@@ -215,11 +217,23 @@ public class Controller {
     
     private void handleSwapRack() {
         Player current = game.getCurrentPlayer();
-        // Appel à la méthode swapRack() du Player (à implémenter dans Player.java)
         List<Tile> oldRack = current.swapRack();
         handleTurn(); 
+        if (referee.isGameOver(game)) {
+            // Afficher la boîte de dialogue de fin
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Fin de partie");
+            alert.setHeaderText(null);
+            Player winner = referee.getWinner(game);
+            String msg = String.format("The winner is : %s",
+                winner.getName()
+            );
+            alert.setContentText(msg);
+            alert.showAndWait();
+            
+            
+        }
         if (oldRack == null) {
-            // si swapRack() non implémentée ou deck vide
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Swap impossible");
             alert.setHeaderText(null);
