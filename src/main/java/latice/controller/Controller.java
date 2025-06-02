@@ -95,7 +95,7 @@ public class Controller {
         updateView(player.getRack(), player);
         lblScoreP1.setText("Score Player 1 : "+game.getPlayer1().getScore());
         lblScoreP2.setText("Score Player 2 : "+game.getPlayer2().getScore());
-        lblRound.setText("ROUND : "+ game.getRound());
+        lblRound.setText("ROUND : "+ (game.getRound()+1)/2);
     }
 
     public void updateView(List<Tile> tiles, Player player) {
@@ -213,6 +213,17 @@ public class Controller {
         // Appel à la méthode swapRack() du Player (à implémenter dans Player.java)
         List<Tile> oldRack = current.swapRack();
         handleTurn();
+        if (referee.isGameOver(game)) {
+            // Afficher la boîte de dialogue de fin
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Fin de partie");
+            alert.setHeaderText(null);
+            Player winner = referee.getWinner(game);
+            String msg = String.format("Draw between the players ");
+            alert.setContentText(msg);
+            alert.showAndWait();
+            
+        }
         if (oldRack == null) {
             // si swapRack() non implémentée ou deck vide
             Alert alert = new Alert(Alert.AlertType.WARNING);

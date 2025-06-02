@@ -113,10 +113,22 @@ public class Board {
 	    int center = size / 2;
 	    
 	    // 3) Premier tour : placement uniquement au centre
-	    if (game.getRound() == 1) {
-	        return row == center && col == center;
+	    //if (game.getRound() == 1) {
+	    //    return row == center && col == center;
+	    //}
+	    boolean emptyBoard = true;
+	    for (int r = 0; r < size && emptyBoard; r++) {
+	        for (int c = 0; c < size; c++) {
+	            if (getCell(r, c).getTile() != null) {
+	                emptyBoard = false;
+	                break;
+	            }
+	        }
 	    }
 	    
+	    if (emptyBoard) {
+	    	return row == center && col == center;
+	    }
 	    // 4) Tours suivants : il faut au moins une tuile adjacente de même couleur
 	    List<Tile> adjacents = getAdjacentTiles(pos);
 	    for (Tile adj : adjacents) {
