@@ -11,6 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import latice.model.Game;
 import latice.model.Player;
 import latice.model.Referee;
@@ -35,6 +37,7 @@ public class Controller {
     @FXML private Label lblScoreP1;
     @FXML private Label lblRound;
     @FXML private Button btnSwapRack;
+    @FXML private AnchorPane rootPane;
     private ImageView[] rackSlots;
 
     private Referee referee;
@@ -188,8 +191,11 @@ public class Controller {
                                         String msg = String.format("The winner is : %s",
                                             winner.getName()
                                         );
+                                        Stage primaryStage = (Stage) rootPane.getScene().getWindow();
+                                        primaryStage.close();
                                         alert.setContentText(msg);
                                         alert.showAndWait();
+                                        
                                         
                                         
                                     }
@@ -230,6 +236,9 @@ public class Controller {
             );
             alert.setContentText(msg);
             alert.showAndWait();
+            game.setIsOnGoing(false);
+            Stage primaryStage = (Stage) rootPane.getScene().getWindow();
+            primaryStage.close();
             
             
         }
