@@ -35,6 +35,7 @@ public class Controller {
     @FXML private Label lblScoreP1;
     @FXML private Label lblRound;
     @FXML private Button btnSwapRack;
+    
     @FXML private MediaView videoBackground;
     
     private ImageView[] rackSlots;
