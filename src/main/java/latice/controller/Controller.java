@@ -1,6 +1,7 @@
 package latice.controller;
 
 import javafx.fxml.FXML;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ import latice.model.Referee;
 import latice.model.board.Position;
 import latice.model.tiles.Tile;
 import latice.model.tiles.TileUtils;
+import javafx.scene.media.MediaView;
 
 import java.net.URL;
 import java.util.List;
@@ -33,6 +35,7 @@ public class Controller {
     @FXML private Label lblScoreP1;
     @FXML private Label lblRound;
     @FXML private Button btnSwapRack;
+    @FXML private MediaView videoBackground;
     
     private ImageView[] rackSlots;
 
