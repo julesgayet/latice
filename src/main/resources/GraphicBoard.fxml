@@ -44,7 +44,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" style="-fx-background-color: #f1efea;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="latice.controller.Controller" stylesheets="@style.css" styleClass="game-background">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" style="-fx-background-color: #f1efea;" styleClass="game-background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="latice.controller.Controller">
 
    <center>
       <GridPane fx:id="boardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" style="-fx-border-color: #00008B; -fx-border-width: 25;" BorderPane.alignment="CENTER">
@@ -509,6 +509,9 @@
                </image>
             </ImageView>
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </GridPane>
    </center>
    <bottom>
@@ -579,8 +582,11 @@
             </Label>
             <Button fx:id="btnSwapRack" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="700.0" text="Swap Rack">
                <GridPane.margin>
-                  <Insets bottom="150.0" />
+                  <Insets bottom="150.0" right="5.0" />
                </GridPane.margin>
+               <padding>
+                  <Insets right="6.0" />
+               </padding>
             </Button>
          </children>
          <BorderPane.margin>
@@ -593,30 +599,42 @@
    </bottom>
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="lblScoreP1" text="Score Player 1 : 0">
-               <HBox.margin>
-                  <Insets left="90.0" top="35.0" />
-               </HBox.margin>
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblScoreP2" text="Score Player 2 : 0">
-               <HBox.margin>
-                  <Insets left="250.0" top="35.0" />
-               </HBox.margin>
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Label>
-         </children>
          <BorderPane.margin>
             <Insets left="400.0" />
          </BorderPane.margin>
          <padding>
             <Insets top="50.0" />
          </padding>
+         <children>
+            <Label alignment="CENTER" text="ROUND : 0">
+               <HBox.margin>
+                  <Insets left="270.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+         </children>
       </HBox>
    </top>
+   <left>
+      <Label fx:id="lblScoreP1" text="Score Player 1 : 0" BorderPane.alignment="CENTER_RIGHT">
+         <font>
+            <Font size="21.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="200.0" left="50.0" />
+         </BorderPane.margin>
+      </Label>
+   </left>
+   <right>
+      <Label fx:id="lblScoreP2" text="Score Player 2 : 0" BorderPane.alignment="CENTER_LEFT">
+         <font>
+            <Font size="21.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="200.0" right="50.0" />
+         </BorderPane.margin>
+      </Label>
+   </right>
 </BorderPane>

@@ -31,6 +31,7 @@ public class Controller {
     @FXML private Label lbl_player;
     @FXML private Label lblScoreP2;
     @FXML private Label lblScoreP1;
+    @FXML private Label lblRound;
     @FXML private Button btnSwapRack;
     
     private ImageView[] rackSlots;
@@ -183,6 +184,7 @@ public class Controller {
                                         );
                                         alert.setContentText(msg);
                                         alert.showAndWait();
+                                        
                                     }
                                     System.out.println("Placement valide !");
                                 } else {
