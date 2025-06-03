@@ -231,9 +231,16 @@ public class Controller {
             alert.setTitle("Fin de partie");
             alert.setHeaderText(null);
             Player winner = referee.getWinner(game);
-            String msg = String.format("The winner is : %s",
-                winner.getName()
-            );
+            String msg ="";
+            if (game.getRound()>= 20) {
+            	msg = String.format("Draw between the players");
+            }
+            else {
+            	msg = String.format("The winner is : %s",
+                        winner.getName()
+                    );
+            }
+            
             alert.setContentText(msg);
             alert.showAndWait();
             game.setIsOnGoing(false);

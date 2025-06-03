@@ -54,7 +54,7 @@ public class Referee {
         boolean p1Empty = p1.getRack().isEmpty() && p1.getDeck().isEmpty();
         boolean p2Empty = p2.getRack().isEmpty() && p2.getDeck().isEmpty();
 
-        // Fin de partie si AU MOINS un joueur a à la fois rack vide et pioche vide
+        // Fin de partie si AU MOINS un joueur a à la fois rack vide et pioche vide et si round == 20
         return p1Empty || p2Empty || (game.getRound()==20);
     }
     
