@@ -112,7 +112,8 @@ public class Board {
 	    // Calcul du centre (pour size = 9 → centre en (4,4))
 	    int center = size / 2;
 	    
-	    
+	    // 3) S’il n’y a encore aucune tuile sur le plateau, on n'accepte
+	    //    que le placement au centre.
 	    boolean emptyBoard = true;
 	    for (int r = 0; r < size && emptyBoard; r++) {
 	        for (int c = 0; c < size; c++) {
@@ -122,29 +123,36 @@ public class Board {
 	            }
 	        }
 	    }
-	    
 	    if (emptyBoard) {
-	    	return row == center && col == center;
+	        return (row == center && col == center);
 	    }
 	    
-	    
+	    // 4) Récupérer les tuiles adjacentes (haut, bas, gauche, droite)
 	    List<Tile> adjacents = getAdjacentTiles(pos);
-	    System.out.println(adjacents);
-	    int valid = 0;
+	    
+	    // Si aucune case adjacente n'est occupée, on ne peut pas poser ici
+	    if (adjacents == null || adjacents.isEmpty()) {
+	        return false;
+	    }
+	    
+	    // 5) Vérifier la compatibilité AVEC CHAQUE tuile adjacente :
+	    //    pour chaque adjacent, la couleur doit être identique OU le symbole identique.
 	    for (Tile adj : adjacents) {
-	        if (adj.getColor() == tile.getColor() || adj.getSymbol() == tile.getSymbol()) {
-	            valid+=1;
+	        if (adj == null) {
+	            // Si getAdjacentTiles retourne une liste contenant des null (cases hors plateau ou vides),
+	            // on les ignore (mais en principe, on ne devrait pas avoir de null ici)
+	            continue;
+	        }
+	        boolean sameColor = adj.getColor() == tile.getColor();
+	        boolean sameSymbol = adj.getSymbol() == tile.getSymbol();
+	        if (!(sameColor || sameSymbol)) {
+	            return false;
 	        }
 	    }
-	    if (valid == adjacents.size()) {
-	    	return true;
-	    }else {
-	    	return false;
-	    }
 	    
-	    
+	    // Si on a passé toutes les adjacences sans retour false, le placement est valide
+	    return true;
 	}
-
 
 	public List<Tile>  getAdjacentTiles(Position pos){
 		
