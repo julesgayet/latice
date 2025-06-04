@@ -3,12 +3,12 @@ package latice.controller;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
@@ -23,6 +23,8 @@ import latice.model.tiles.TileUtils;
 
 import java.net.URL;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controller {
 
@@ -38,6 +40,11 @@ public class Controller {
     @FXML private Label lblRound;
     @FXML private Button btnSwapRack;
     @FXML private AnchorPane rootPane;
+    
+    
+    private static final String POINT_SUFFIX = " points";
+    private static final String SCORE_PREFIX = "Score ";
+    private static final Logger LOGGER = Logger.getLogger(Controller.class.getName());
     private ImageView[] rackSlots;
 
     private Referee referee;
@@ -57,8 +64,6 @@ public class Controller {
         rackSlots = new ImageView[] { rack_1, rack_2, rack_3, rack_4, rack_5 };
         btnSwapRack.setOnAction(event -> handleSwapRack());
         for (ImageView slot : rackSlots) {
-            System.out.println("Slot enregistré : " + slot + " → id=" + slot.getId());
-
             slot.setOnDragDetected(event -> {
                 int index = getSlotIndex(slot.getId());
                 if (index >= 0 && index < game.getCurrentPlayer().getRack().size()) {
@@ -69,7 +74,7 @@ public class Controller {
                     db.setDragView(slot.getImage());
                     
                 } else {
-                    System.out.println("Aucune tuile à déplacer pour " + slot.getId());
+                	LOGGER.warning("Aucune tuile à déplacer pour " + slot.getId());
                 }
                 event.consume();
             });
@@ -91,7 +96,7 @@ public class Controller {
         game.setRound(game.getRound()+1);
         // Mettre à jour l'affichage pour le nouveau joueur
         updateViewForCurrentPlayer();
-        System.out.println("Changement de tour effectué, c'est au tour de : " + game.getCurrentPlayer().getName());
+        LOGGER.log(Level.INFO,"Changement de tour effectué, c''est au tour de : {0}",game.getCurrentPlayer().getName());
     }
 
     private void updateViewForCurrentPlayer() {
@@ -101,8 +106,8 @@ public class Controller {
         int score = game.getPlayer1().getScore();
         String playerName2 = game.getPlayer2().getName();
         int score2 = game.getPlayer2().getScore();
-        lblScoreP1.setText("Score " + playerName + " : " + score + " points");
-        lblScoreP2.setText("Score " + playerName2 + " : " + score2 + " points");
+        lblScoreP1.setText(SCORE_PREFIX + playerName + " : " + score + POINT_SUFFIX);
+        lblScoreP2.setText(SCORE_PREFIX + playerName2 + " : " + score2 + POINT_SUFFIX);
         lblRound.setText("ROUND : "+ (game.getRound()+1)/2);
     }
 
@@ -113,7 +118,7 @@ public class Controller {
                 URL url = getClass().getResource(path);
 
                 if (url == null) {
-                    System.err.println("Image non trouvée pour le chemin : " + path);
+                	LOGGER.log(Level.SEVERE, "Image non trouvée pour le chemin : {0}", path);
                 } else {
                     rackSlots[i].setImage(new Image(url.toExternalForm()));
                 }
@@ -130,7 +135,7 @@ public class Controller {
         try {
             return Integer.parseInt(rackId.split("_")[1]) - 1 ; // rack_1 → index 0
         } catch (Exception e) {
-            System.err.println("Erreur pour récupérer l'index à partir de " + rackId);
+        	LOGGER.severe("Erreur pour récupérer l'index à partir de " + rackId);
             return -1;
         }
     }
@@ -139,7 +144,7 @@ public class Controller {
         int index = getSlotIndex(rackId);
         List<Tile> rack = game.getCurrentPlayer().getRack();
         if (index < 0 || index >= rack.size()) {
-            System.err.println("Pas de tuile dans le rack à l’index " + index + " (taille actuelle : " + rack.size() + ")");
+        	LOGGER.log(Level.WARNING,"Pas de tuile dans le rack à l’index {0} (taille actuelle : {1})",new Object[]{ index, rack.size() });
             return null;
         }
         return rack.get(index);
@@ -152,73 +157,92 @@ public class Controller {
                 ImageView square = (ImageView) lbl_deck.getScene().lookup("#" + squareId);
 
                 if (square != null) {
-                    int finalRow = row;
-                    int finalCol = col;
-
-                    square.setOnDragOver(event -> {
-                        if (event.getGestureSource() != square && event.getDragboard().hasString()) {
-                            event.acceptTransferModes(TransferMode.MOVE);
-                        }
-                        event.consume();
-                    });
-
-                    square.setOnDragDropped(event -> {
-                        Dragboard db = event.getDragboard();
-                        boolean success = false;
-                        if (db.hasString()) {
-                            String rackId = db.getString();
-                            ImageView draggedSlot = (ImageView) lbl_deck.getScene().lookup("#" + rackId);
-                            Tile draggedTile = getTileFromRack(rackId);
-
-                            if (draggedSlot != null && draggedSlot.getImage() != null && draggedTile != null) {
-                                if (referee.isValidMove(draggedTile, finalRow, finalCol, game)) {
-                                    square.setImage(draggedSlot.getImage());
-                                    draggedSlot.setImage(null);
-                                    referee.applyScore(game, game.getCurrentPlayer(), draggedTile, new Position(finalRow, finalCol));
-                                    
-
-                                    game.getCurrentPlayer().getRack().remove(draggedTile);
-                                    game.getBoard().getCell(finalRow, finalCol).setTile(draggedTile);
-
-                                    success = true;
-                                    handleTurn();
-                                    if (referee.isGameOver(game)) {
-                                        // Afficher la boîte de dialogue de fin
-                                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                        alert.setTitle("Fin de partie");
-                                        alert.setHeaderText(null);
-                                        Player winner = referee.getWinner(game);
-                                        String msg = String.format("The winner is : %s",
-                                            winner.getName()
-                                        );
-                                        Stage primaryStage = (Stage) rootPane.getScene().getWindow();
-                                        primaryStage.close();
-                                        alert.setContentText(msg);
-                                        alert.showAndWait();
-                                        
-                                        
-                                        
-                                    }
-                                    
-                                    System.out.println("Placement valide !");
-                                } else {
-                                    Alert alert = new Alert(AlertType.WARNING);
-                                    alert.setTitle("Placement invalide");
-                                    alert.setHeaderText(null);
-                                    alert.setContentText("Vous ne pouvez pas placer cette tuile ici.");
-                                    alert.showAndWait();
-                                }
-                            }
-                        }
-                        event.setDropCompleted(success);
-                        event.consume();
-                    });
+                    configureSquareDragHandlers(square, row, col);
                 } else {
-                    System.err.println("Case non trouvée : " + squareId);
+                	LOGGER.log(Level.WARNING, "Case non trouvée : {0}", squareId);
                 }
             }
         }
     }
+
+    private void configureSquareDragHandlers(ImageView square, int row, int col) {
+        // OnDragOver : autoriser le drag si c'est un MOUVEMENT valide
+        square.setOnDragOver(event -> {
+            if (event.getGestureSource() != square && event.getDragboard().hasString()) {
+                event.acceptTransferModes(TransferMode.MOVE);
+            }
+            event.consume();
+        });
+
+        // OnDragDropped : déléguer à une méthode dédiée pour alléger le lambda
+        square.setOnDragDropped(event -> 
+            handleSquareDragDropped(square, row, col, event)
+        );
+    }
+
+    private void handleSquareDragDropped(ImageView square, int row, int col, DragEvent event) {
+        Dragboard db = event.getDragboard();
+        boolean success = false;
+
+        if (db.hasString()) {
+            String rackId = db.getString();
+            ImageView draggedSlot = (ImageView) lbl_deck.getScene().lookup("#" + rackId);
+            Tile draggedTile = getTileFromRack(rackId);
+
+            if (draggedSlot != null && draggedSlot.getImage() != null && draggedTile != null) {
+                if (referee.isValidMove(draggedTile, row, col, game)) {
+                    // Placer l'image sur la case
+                    square.setImage(draggedSlot.getImage());
+                    draggedSlot.setImage(null);
+
+                    // Appliquer le score et mettre à jour le modèle
+                    referee.applyScore(game, game.getCurrentPlayer(), draggedTile, new Position(row, col));
+                    game.getCurrentPlayer().getRack().remove(draggedTile);
+                    game.getBoard().getCell(row, col).setTile(draggedTile);
+
+                    success = true;
+                    handleTurn();
+
+                    // Vérifier si la partie est terminée
+                    if (referee.isGameOver(game)) {
+                        showEndGameDialog();
+                    }
+
+                    LOGGER.info("Placement valide !");
+                } else {
+                    showInvalidPlacementAlert();
+                }
+            }
+        }
+
+        event.setDropCompleted(success);
+        event.consume();
+    }
+
+    private void showEndGameDialog() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Fin de partie");
+        alert.setHeaderText(null);
+
+        Player winner = referee.getWinner(game);
+        String msg = String.format("The winner is: %s", winner.getName());
+
+        // Fermer la fenêtre principale avant d’afficher le dialogue
+        Stage primaryStage = (Stage) rootPane.getScene().getWindow();
+        primaryStage.close();
+
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
+    private void showInvalidPlacementAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Placement invalide");
+        alert.setHeaderText(null);
+        alert.setContentText("Vous ne pouvez pas placer cette tuile ici.");
+        alert.showAndWait();
+    }
+
     
     
     private void handleSwapRack() {
@@ -233,7 +257,7 @@ public class Controller {
             Player winner = referee.getWinner(game);
             String msg ="";
             if (game.getRound()>= 20) {
-            	msg = String.format("Draw between the players");
+            	msg = "Draw between the players";
             }
             else {
             	msg = String.format("The winner is : %s",
@@ -266,6 +290,6 @@ public class Controller {
         int score = game.getPlayer1().getScore();
         String playerName2 = game.getPlayer2().getName();
         int score2 = game.getPlayer2().getScore();
-        lblScoreP1.setText("Score " + playerName + " : " + score + " points");
-        lblScoreP2.setText("Score " + playerName2 + " : " + score2 + " points");
+        lblScoreP1.setText(SCORE_PREFIX+ playerName + " : " + score + POINT_SUFFIX);
+        lblScoreP2.setText(SCORE_PREFIX + playerName2 + " : " + score2 + POINT_SUFFIX);
     }}
