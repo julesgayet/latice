@@ -13,18 +13,16 @@ import latice.model.tiles.Tile;
 public class Referee {
     private Player player1;
     private Player player2;
-    private final int RACK_SIZE = 5;
-	private Game game;
+    private static int rackSize = 5;
 
-    public Referee(Player player1, Player player2, Game game) {
+    public Referee(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
-        this.game = game;
     }
     
     
     public void fillRack(Player player) {
-        while (player.getRack().size() < RACK_SIZE && !player.getDeck().isEmpty()) {
+        while (player.getRack().size() < rackSize && !player.getDeck().isEmpty()) {
             Tile tile = player.getDeck().remove(0);
             player.getRack().add(tile);
         }
