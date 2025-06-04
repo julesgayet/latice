@@ -73,7 +73,7 @@ public class Game {
             }
 
             //  la position doit être valide selon les règles normales
-            return getBoard().isPlacementValid(tile, pos,game);
+            return getBoard().isPlacementValid(tile, pos);
         }
 
         // Si ce n'est pas le premier tour, on ne vérifie rien ici

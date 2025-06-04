@@ -1,16 +1,15 @@
 package latice.model.board;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import latice.model.Game;
-import latice.model.Player;
 import latice.model.tiles.Tile;
 
 public class Board {
-    private final int size = 9;
+    private static int size = 9;
     private Cell[][] grid;
-    private Game game;
 
     public Board() {
         grid = new Cell[size][size]; 
@@ -18,36 +17,50 @@ public class Board {
     }
 
     private void initializeBoard() {
+        Set<Position> sunPositions = collectSunPositions();
+        Position moonPosition = new Position(size / 2, size / 2);
+
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                // Soleil aux 4 coins + centre + autres positions
-                if ((row == 0 && col == 0) || 
-                		(row == 0 && col == size - 1) ||
-                		(row == size - 1 && col == 0) ||
-                		(row == size - 1 && col == size - 1) ||
-                		
-                		(row == 0  && col == 4) ||
-                		(row == 1  && col == 7) ||
-                		(row == 4  && col == 0)||
-                		(row == 7  && col == 1)||
-                		(row == 6  && col == 2)||
-                		(row == 7  && col == 7)||
-                		(row == 6  && col == 6)||
-                		(row == 4  && col == 8)||
-                		(row == 8  && col == 4)||
-                		(row == 1  && col == 1)||
-        				(row == 2  && col == 2)||
-                		(row == 2  && col == 6))
-                {
+                Position current = new Position(row, col);
+
+                if (sunPositions.contains(current)) {
                     grid[row][col] = new Cell(CellType.SUN);
-                } else if((row == 4  && col == 4)) {
-                	grid[row][col] = new Cell(CellType.MOON);
-                }else {
+                } else if (current.equals(moonPosition)) {
+                    grid[row][col] = new Cell(CellType.MOON);
+                } else {
                     grid[row][col] = new Cell(CellType.NORMAL);
                 }
             }
         }
-	}
+    }
+
+    private Set<Position> collectSunPositions() {
+        Set<Position> positions = new HashSet<>();
+
+        // 4 coins
+        positions.add(new Position(0, 0));
+        positions.add(new Position(0, size - 1));
+        positions.add(new Position(size - 1, 0));
+        positions.add(new Position(size - 1, size - 1));
+
+        // autres emplacements “soleil”
+        positions.add(new Position(0, 4));
+        positions.add(new Position(1, 7));
+        positions.add(new Position(4, 0));
+        positions.add(new Position(7, 1));
+        positions.add(new Position(6, 2));
+        positions.add(new Position(7, 7));
+        positions.add(new Position(6, 6));
+        positions.add(new Position(4, 8));
+        positions.add(new Position(8, 4));
+        positions.add(new Position(1, 1));
+        positions.add(new Position(2, 2));
+        positions.add(new Position(2, 6));
+
+        return positions;
+    }
+
     
     public boolean hasTileIn() {
         for (int row = 0; row < grid.length; row++) {
@@ -83,9 +96,9 @@ public class Board {
     }
     
 	
-	public void placeTile(Tile tile, Position pos,Game game) {
+	public void placeTile(Tile tile, Position pos) {
 		
-		if (isPlacementValid(tile, pos,game)) {
+		if (isPlacementValid(tile, pos)) {
 	        throw new IllegalArgumentException("Placement invalide.");
 	    }
 
@@ -94,65 +107,64 @@ public class Board {
 	    tile.InGame(true);
 	}
 	
-	public boolean isPlacementValid(Tile tile, Position pos, Game game) {
+	public boolean isPlacementValid(Tile tile, Position pos) {
 	    int row = pos.getPosX();
 	    int col = pos.getPosY();
-	    
-	    // 1) Vérifier les limites du plateau
-	    if (row < 0 || row >= size || col < 0 || col >= size) {
+
+	    if (!isWithinBounds(row, col) || !isCellEmpty(row, col)) {
 	        return false;
 	    }
-	    
-	    // 2) La case doit être vide
-	    Cell cell = getCell(row, col);
-	    if (!cell.isEmpty()) {
-	        return false;
+
+	    if (isEmptyBoard()) {
+	        return isCenterPosition(row, col);
 	    }
-	    
-	    // Calcul du centre (pour size = 9 → centre en (4,4))
-	    int center = size / 2;
-	    
-	    // 3) S’il n’y a encore aucune tuile sur le plateau, on n'accepte
-	    //    que le placement au centre.
-	    boolean emptyBoard = true;
-	    for (int r = 0; r < size && emptyBoard; r++) {
+
+	    return hasValidAdjacents(tile, pos);
+	}
+
+	private boolean isWithinBounds(int row, int col) {
+	    return row >= 0 && row < size && col >= 0 && col < size;
+	}
+
+	private boolean isCellEmpty(int row, int col) {
+	    return getCell(row, col).isEmpty();
+	}
+
+	private boolean isEmptyBoard() {
+	    for (int r = 0; r < size; r++) {
 	        for (int c = 0; c < size; c++) {
 	            if (getCell(r, c).getTile() != null) {
-	                emptyBoard = false;
-	                break;
+	                return false;
 	            }
 	        }
 	    }
-	    if (emptyBoard) {
-	        return (row == center && col == center);
-	    }
-	    
-	    // 4) Récupérer les tuiles adjacentes (haut, bas, gauche, droite)
+	    return true;
+	}
+
+	private boolean isCenterPosition(int row, int col) {
+	    int center = size / 2;
+	    return row == center && col == center;
+	}
+
+	private boolean hasValidAdjacents(Tile tile, Position pos) {
 	    List<Tile> adjacents = getAdjacentTiles(pos);
-	    
-	    // Si aucune case adjacente n'est occupée, on ne peut pas poser ici
 	    if (adjacents == null || adjacents.isEmpty()) {
 	        return false;
 	    }
-	    
-	    // 5) Vérifier la compatibilité AVEC CHAQUE tuile adjacente :
-	    //    pour chaque adjacent, la couleur doit être identique OU le symbole identique.
+
 	    for (Tile adj : adjacents) {
 	        if (adj == null) {
-	            // Si getAdjacentTiles retourne une liste contenant des null (cases hors plateau ou vides),
-	            // on les ignore (mais en principe, on ne devrait pas avoir de null ici)
 	            continue;
 	        }
-	        boolean sameColor = adj.getColor() == tile.getColor();
+	        boolean sameColor  = adj.getColor() == tile.getColor();
 	        boolean sameSymbol = adj.getSymbol() == tile.getSymbol();
 	        if (!(sameColor || sameSymbol)) {
 	            return false;
 	        }
 	    }
-	    
-	    // Si on a passé toutes les adjacences sans retour false, le placement est valide
 	    return true;
 	}
+
 
 	public List<Tile>  getAdjacentTiles(Position pos){
 		

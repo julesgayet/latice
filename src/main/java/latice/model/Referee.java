@@ -44,7 +44,7 @@ public class Referee {
     
     public boolean isValidMove(Tile tile, int row, int col,Game game) {
         Position pos = new Position(row, col);
-        return game.getBoard().isPlacementValid(tile, pos,game);
+        return game.getBoard().isPlacementValid(tile, pos);
     }
 
     public boolean isGameOver(Game game) {
