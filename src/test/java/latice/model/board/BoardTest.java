@@ -65,7 +65,7 @@ class BoardTest {
     void testIsPlacementValid_noAdjacentReturnsFalse() {
         Position p = new Position(2,2);
         Tile t = new Tile(1, Color.DARK_BLUE, Symbol.SEAGULL);
-        assertFalse(board.isPlacementValid(t, p, game));
+        assertFalse(board.isPlacementValid(t, p));
     }
 
     @Test
@@ -74,14 +74,14 @@ class BoardTest {
         Tile neighbor = new Tile(2, Color.RED, Symbol.FLOWER);
         board.getCell(2,1).setTile(neighbor);
         Tile t = new Tile(3, Color.RED, Symbol.DOLPHIN);
-        assertTrue(board.isPlacementValid(t, p, game));
+        assertTrue(board.isPlacementValid(t, p));
     }
 
     @Test
     void testIsPlacementValid_outOfBounds() {
         Position p = new Position(-1, 0);
         Tile t = new Tile(4, Color.PINK, Symbol.LIZARD);
-        assertFalse(board.isPlacementValid(t, p, game));
+        assertFalse(board.isPlacementValid(t, p));
     }
 
     @Test
@@ -90,7 +90,7 @@ class BoardTest {
         Tile existing = new Tile(5, Color.GREEN, Symbol.FEATHER);
         board.getCell(1,1).setTile(existing);
         Tile t = new Tile(6, Color.GREEN, Symbol.FEATHER);
-        assertFalse(board.isPlacementValid(t, p, game));
+        assertFalse(board.isPlacementValid(t, p));
     }
 
     @Test
@@ -116,7 +116,7 @@ class BoardTest {
     void testPlaceTile_alwaysPlacesWithoutValidation() {
         Position p = new Position(1,1);
         Tile t = new Tile(3, Color.PINK, Symbol.LIZARD);
-        assertDoesNotThrow(() -> board.placeTile(t, p, game));
+        assertDoesNotThrow(() -> board.placeTile(t, p));
         assertEquals(t, board.getCell(1,1).getTile());
         assertTrue(t.getInGame());
     }

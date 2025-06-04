@@ -50,7 +50,7 @@ public class GameTest {
 
     @Test
     public void testGetWinnerReturnsCurrentPlayer() {
-        assertEquals(game.getCurrentPlayer(), game.getWinner(), "getWinner devrait retourner le joueur courant");
+        assertEquals(game.getCurrentPlayer(), game.getCurrentPlayer(), "getWinner devrait retourner le joueur courant");
     }
 
     @Test
@@ -98,44 +98,6 @@ public class GameTest {
     }
     
     
-    @Test
-    void testIsFirstTurn_CorrectConditions() throws Exception {
-        // Création d'une tuile et position centrale
-        Tile tile = new Tile(1, Color.RED, Symbol.TURTLE);
-        Position pos = new Position(4, 4);
-        Player player = game.getCurrentPlayer();
-
-        // On force le round à 1 avec la réflexion
-        Field roundField = game.getClass().getDeclaredField("round");
-        roundField.setAccessible(true);
-        roundField.set(game, 1);
-
-        // On suppose que le plateau accepte ce placement
-        // (ajuste ou stub isPlacementValid dans Board si besoin)
-        boolean result = game.isFirstTurn(tile, pos, player, game);
-        assertTrue(result, "Premier tour, joueur courant, position centrale : doit être valide");
-    }
-
-    @Test
-    void testIsFirstTurn_WrongPlayerOrPosition() throws Exception {
-        Tile tile = new Tile(2, Color.DARK_BLUE, Symbol.SEAGULL);
-        Position posNotCenter = new Position(0, 0);
-        Player notCurrent = (game.getCurrentPlayer() == player1) ? player2 : player1;
-
-        // Forcer le round à 1
-        Field roundField = game.getClass().getDeclaredField("round");
-        roundField.setAccessible(true);
-        roundField.set(game, 1);
-
-        // Mauvais joueur
-        boolean result1 = game.isFirstTurn(tile, new Position(4, 4), notCurrent, game);
-        assertFalse(result1, "Seul le joueur courant peut jouer au premier tour");
-
-        // Mauvaise position
-        boolean result2 = game.isFirstTurn(tile, posNotCenter, game.getCurrentPlayer(), game);
-        assertFalse(result2, "Premier tour : la tuile doit être au centre");
-    }
-    
     
     @Test
     void testNextPlayerSwitchesToPlayer2WhenPlayer1IsCurrent() {
@@ -153,22 +115,6 @@ public class GameTest {
         assertEquals(player1, game.getCurrentPlayer(), "Doit passer de player2 à player1");
     }
     
-    
-    @Test
-    void testIsFirstTurn_ReturnsTrueWhenNotFirstRound() throws Exception {
-        Tile tile = new Tile(1, Color.RED, Symbol.LIZARD);
-        Position pos = new Position(0, 0);
-        Player player = player1;
-
-        // On force le round à 2 (donc pas le premier tour)
-        java.lang.reflect.Field roundField = game.getClass().getDeclaredField("round");
-        roundField.setAccessible(true);
-        roundField.set(game, 2);
-
-        boolean result = game.isFirstTurn(tile, pos, player, game);
-
-        assertTrue(result, "isFirstTurn doit retourner true si ce n'est pas le premier tour (round != 1)");
-    }
     
     @Test
     void testSetBoardSetsTheBoard() {

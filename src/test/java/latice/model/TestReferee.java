@@ -20,7 +20,7 @@ public class TestReferee {
     public void setUp() {
         player1 = new Player("Player 1");
         player2 = new Player("Player 2");
-        referee = new Referee(player1, player2, null);
+        referee = new Referee(player1, player2);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class TestReferee {
         Tile tile = new Tile(1, Color.RED, Symbol.FLOWER);
         Board board = new Board() {
             @Override
-            public boolean isPlacementValid(Tile t, Position pos, Game game) {
+            public boolean isPlacementValid(Tile t, Position pos) {
                 return true;
             }
         };

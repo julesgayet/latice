@@ -16,49 +16,50 @@ public class Board {
         initializeBoard();          
     }
 
+    private Set<String> collectSunKeys() {
+        Set<String> keys = new HashSet<>();
+
+        // 4 coins
+        keys.add("0-0");
+        keys.add("0-" + (size - 1));
+        keys.add((size - 1) + "-0");
+        keys.add((size - 1) + "-" + (size - 1));
+
+        // autres emplacements “soleil”
+        keys.add("0-4");
+        keys.add("1-7");
+        keys.add("4-0");
+        keys.add("7-1");
+        keys.add("6-2");
+        keys.add("7-7");
+        keys.add("6-6");
+        keys.add("4-8");
+        keys.add("8-4");
+        keys.add("1-1");
+        keys.add("2-2");
+        keys.add("2-6");
+
+        return keys;
+    }
+
+    
     private void initializeBoard() {
-        Set<Position> sunPositions = collectSunPositions();
-        Position moonPosition = new Position(size / 2, size / 2);
+        Set<String> sunKeys = collectSunKeys();
+        String centerKey = (size / 2) + "-" + (size / 2);
 
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                Position current = new Position(row, col);
+                String key = row + "-" + col;
 
-                if (sunPositions.contains(current)) {
+                if (sunKeys.contains(key)) {
                     grid[row][col] = new Cell(CellType.SUN);
-                } else if (current.equals(moonPosition)) {
+                } else if (key.equals(centerKey)) {
                     grid[row][col] = new Cell(CellType.MOON);
                 } else {
                     grid[row][col] = new Cell(CellType.NORMAL);
                 }
             }
         }
-    }
-
-    private Set<Position> collectSunPositions() {
-        Set<Position> positions = new HashSet<>();
-
-        // 4 coins
-        positions.add(new Position(0, 0));
-        positions.add(new Position(0, size - 1));
-        positions.add(new Position(size - 1, 0));
-        positions.add(new Position(size - 1, size - 1));
-
-        // autres emplacements “soleil”
-        positions.add(new Position(0, 4));
-        positions.add(new Position(1, 7));
-        positions.add(new Position(4, 0));
-        positions.add(new Position(7, 1));
-        positions.add(new Position(6, 2));
-        positions.add(new Position(7, 7));
-        positions.add(new Position(6, 6));
-        positions.add(new Position(4, 8));
-        positions.add(new Position(8, 4));
-        positions.add(new Position(1, 1));
-        positions.add(new Position(2, 2));
-        positions.add(new Position(2, 6));
-
-        return positions;
     }
 
     
