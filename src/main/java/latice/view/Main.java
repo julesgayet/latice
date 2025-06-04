@@ -116,7 +116,7 @@ public class Main extends Application {
         Player p1 = new Player(joueur1, new ArrayList<>(), new ArrayList<>(), 0, 1);
         Player p2 = new Player(joueur2, new ArrayList<>(), new ArrayList<>(), 0, 2);
         Game game = new Game(p1, p2, new Board(), true);
-        Referee referee = new Referee(p1, p2, game);
+        Referee referee = new Referee(p1, p2);
         referee.initializeGame();
         Player startingPlayer = game.getCurrentPlayer();
 

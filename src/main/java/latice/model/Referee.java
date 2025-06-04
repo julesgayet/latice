@@ -97,7 +97,7 @@ public class Referee {
     }
 
 	public Player getWinner(Game game) {
-		return game.getWinner();
+		return game.getCurrentPlayer();
 	}
     
 }

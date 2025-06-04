@@ -1,9 +1,9 @@
 package latice.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import latice.model.board.Position;
 import latice.model.tiles.Tile;
 
 public class Player {
@@ -46,7 +46,7 @@ public class Player {
     public List<Tile> swapRack() {
         // Exemple d’implémentation à adapter :
         if (deck.size() < rack.size()) {
-            return null; // pas assez de tuiles dans le deck pour échanger
+            return Collections.emptyList(); // pas assez de tuiles dans le deck pour échanger
         }
         List<Tile> oldRack = new ArrayList<>(rack);
         // Retire toutes les tuiles actuelles et les remet dans le deck

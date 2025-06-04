@@ -2,7 +2,6 @@ package latice.model;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -21,6 +20,7 @@ public class Game {
 	private Player currentPlayer;
 	private Boolean isOnGoing;
 	private int round;
+	private static final Random RANDOM = new Random();
 	
 	public Game(Player p1, Player p2, Board board, Boolean isOnGoing) {
 	        this.player1 = p1;
@@ -48,9 +48,7 @@ public class Game {
 	
 	
 	public Player firstPlayer(Player p1, Player p2) {
-		
-	        Random rand = new Random();
-	        int nombre = rand.nextInt(2);
+	        int nombre = RANDOM.nextInt(2);
 	        
 	        if (nombre == 1) {
 	        	return p1;
@@ -59,7 +57,7 @@ public class Game {
 	    }
 	}
 	
-	public boolean isFirstTurn(Tile tile, Position pos, Player player,Game game) {
+	public boolean isFirstTurn(Tile tile, Position pos, Player player) {
         // Vérifie si c'est le premier tour
         if (getRound() == 1) {
             // Seul le joueur courant peut jouer
@@ -82,16 +80,12 @@ public class Game {
 	
 	public void nextPlayer() {
 		Player current = this.getCurrentPlayer();
-		if (current.getName()== this.getPlayer1().getName()) {
+		if (current.getName().equals(this.getPlayer1().getName()) ) {
 			this.setCurrentPlayer(getPlayer2());
 		}else {
 			this.setCurrentPlayer(getPlayer1());
 		}
 		
-	}
-
-	public Player getWinner() {
-		return currentPlayer;
 	}
 	
 	public Player getPlayer1() {
