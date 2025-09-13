@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage; 
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import latice.controller.Controller;
 import latice.model.Game;
 import latice.model.Player;
@@ -67,6 +69,7 @@ public class Main extends Application {
         loginStage.setScene(loginScene);
         loginStage.setTitle("Noms des joueurs");
         loginStage.setResizable(false);
+        loginStage.centerOnScreen();
 
         // ENTER pour passer au champ suivant/valider
         player1Field.setOnAction(e -> player2Field.requestFocus());
@@ -128,7 +131,7 @@ public class Main extends Application {
     private void showMainGameWindow(Stage primaryStage, Player startingPlayer, Game game, Referee referee) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GraphicBoard.fxml"));
-            Parent root = loader.load();  // charger la vue
+            AnchorPane root = loader.load();  // charger la vue
 
             Controller controller = loader.getController();  // récupérer le contrôleur
 
@@ -140,10 +143,19 @@ public class Main extends Application {
             controller.setGame(game);
             controller.updateView(startingPlayer.getRack(), game.getCurrentPlayer());  // mettre à jour la vue
 
+            // Adapter la taille de la fenêtre à la résolution de l'écran
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            double scaleX = screenBounds.getWidth() / root.getPrefWidth();
+            double scaleY = screenBounds.getHeight() / root.getPrefHeight();
+            double scale = Math.min(scaleX, scaleY);
+            root.setScaleX(scale);
+            root.setScaleY(scale);
+
+            Scene scene = new Scene(root, root.getPrefWidth() * scale, root.getPrefHeight() * scale);
             primaryStage.setTitle("Jeu Latice");
-            primaryStage.setScene(new Scene(root));
-            primaryStage.setResizable(false);
-            primaryStage.sizeToScene();
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(true);
+            primaryStage.centerOnScreen();
             primaryStage.show();
 
         } catch (Exception e) {
