@@ -23,6 +23,6 @@ Elle propose une interface graphique intuitive pour poser ses tuiles, gérer les
 	•	JavaFX SDK installé et accessible depuis votre système (sur Mac/Linux, ajoutez JavaFX au PATH ou configurez IntelliJ/Eclipse)
 
 2. Cloner le projet
-   '''git clone https://github.com/julesgayet/latice.git
+   ```git clone https://github.com/julesgayet/latice.git
       cd latice
-   '''
+   ```
