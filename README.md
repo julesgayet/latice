@@ -18,7 +18,7 @@ Elle propose une interface graphique intuitive pour poser ses tuiles, gérer les
 
 📦 Installation
 
-1. Prérequis
+Prérequis
 	•	Java 17 ou supérieur installé
 	•	JavaFX SDK installé et accessible depuis votre système (sur Mac/Linux, ajoutez JavaFX au PATH ou configurez IntelliJ/Eclipse)
 
